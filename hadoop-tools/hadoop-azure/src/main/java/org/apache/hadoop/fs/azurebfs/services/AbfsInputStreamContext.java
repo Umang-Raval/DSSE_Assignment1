@@ -248,11 +248,11 @@ public class AbfsInputStreamContext extends AbfsStreamContext {
    * @param contextEncryptionAdapter encryption adapter.
    * @return this instance.
    */
-    public AbfsInputStreamContext withEncryptionAdapter(
-        ContextEncryptionAdapter contextEncryptionAdapter){
-      this.contextEncryptionAdapter = contextEncryptionAdapter;
-      return this;
-    }
+  public AbfsInputStreamContext withEncryptionAdapter(
+      ContextEncryptionAdapter contextEncryptionAdapter){
+    this.contextEncryptionAdapter = contextEncryptionAdapter;
+    return this;
+  }
 
   /**
    * Finalizes and validates the context configuration.
@@ -348,7 +348,7 @@ public class AbfsInputStreamContext extends AbfsStreamContext {
   }
 
   /** @return context encryption adapter. */
-    public ContextEncryptionAdapter getEncryptionAdapter() {
-      return contextEncryptionAdapter;
-    }
+  public ContextEncryptionAdapter getEncryptionAdapter() {
+    return contextEncryptionAdapter;
+  }
 }
