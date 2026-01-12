@@ -45,9 +45,9 @@ public enum TracingHeaderVersion {
    * Schema: version:clientCorrelationId:clientRequestId:fileSystemId
    *         :primaryRequestId:streamId:opType:retryHeader:ingressHandler
    *         :position:operatedBlobCount:operationSpecificHeader:httpOperationHeader
-   *         :aggregatedMetrics:resourceUtilizationMetrics
+   *         :aggregatedMetrics:resourceUtilizationMetrics:fnsEndptConvertedIndicator
    */
-  V2("v2", 15);
+  V2("v2", 16);
 
   private final String versionString;
   private final int fieldCount;
