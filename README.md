@@ -144,7 +144,6 @@ This highlights the difference between fixed clustering approaches and structure
     ├── output/
     ├── hadoop/
     ├── arcade_tools/
-    ├── tools/
     ├── filter.py
     └── cut
 
