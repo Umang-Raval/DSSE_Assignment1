@@ -16,10 +16,10 @@ This project analyzes the architecture of the Hadoop YARN ResourceManager, focus
 
 ## 👥 Team Members
 - Keshav Indrabhushan Purohit  
-- Rahul Borana  
-- Umang Raval  
-- Pawan  
-- Sangsa Pal  
+- Rahul Vinod Borana  
+- Umang Arvindbhai Raval  
+- Pawankumar Ravish  
+- Sangsaptak Pal  
 
 ---
 
