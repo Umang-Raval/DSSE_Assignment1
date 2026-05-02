@@ -4,14 +4,12 @@
 ---
 
 ## 📌 Project Overview
-This project focuses on analyzing the architecture of the Hadoop YARN ResourceManager, specifically its scheduler and capacity components.
-
-The objective of this assignment is to extract class-level dependencies from a large-scale Java system and apply clustering algorithms to recover its architectural structure.
+This project analyzes the architecture of the Hadoop YARN ResourceManager, focusing on the scheduler and capacity components. The goal is to extract dependencies from the system and apply clustering algorithms to understand architectural structure.
 
 ---
 
 ## 🎯 Research Questions
-1. How do different clustering algorithms vary in their ability to determine architectural components?
+1. How do different clustering algorithms vary in identifying architectural components?
 2. How effectively can dependency extraction support architectural understanding?
 
 ---
@@ -26,95 +24,113 @@ The objective of this assignment is to extract class-level dependencies from a l
 ---
 
 ## ⚖️ Work Distribution (Equal Contribution)
-All team members contributed equally across all stages:
-- Environment setup and Hadoop build  
-- Dependency extraction using ARCADE JavaParser  
-- Filtering relevant ResourceManager components  
-- Running clustering algorithms (WCA, LIMBO, ACDC)  
-- Result validation and analysis  
-- Documentation and reporting  
+All team members equally contributed to:
+- Environment setup  
+- Hadoop build  
+- Dependency extraction  
+- Filtering  
+- Clustering (WCA, LIMBO, ACDC)  
+- Result validation  
+- Documentation  
 
 ---
 
-## ⚙️ Technical Workflow
+# ⚙️ Step-by-Step Execution Guide
 
-### 1. Build Hadoop Project
+## 🔹 Step 1: Clone Hadoop Repository
+    git clone https://github.com/apache/hadoop.git
+    cd hadoop
+
+---
+
+## 🔹 Step 2: Build Hadoop (Generate JAR)
     mvn clean package -DskipTests
 
-Generated:
+✔ Output:
     hadoop-yarn-server-resourcemanager-3.6.0-SNAPSHOT.jar
 
 ---
 
-### 2. Full Dependency Extraction
+## 🔹 Step 3: Extract Full Dependencies (ARCADE JavaParser)
     java -jar arcade_tools/arcade_core_JavaParser.jar \
     /home/umang/Desktop/DSSE/hadoop/hadoop/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-server/hadoop-yarn-server-resourcemanager/target/hadoop-yarn-server-resourcemanager-3.6.0-SNAPSHOT.jar \
     output/YARN_full.rsf \
     output/YARN_full.fv \
     "org.apache.hadoop.yarn"
 
-Output:
-- 1181 classes analyzed  
+✔ Output Logs:
+- 1181 classes analysed  
 - 353 strong components  
 - 68 packages  
-- 17 package-level components  
+- 17 package components  
 
-Line count:
+✔ Count total dependencies:
     wc -l output/YARN_full.rsf
 
-Result:
+✔ Result:
     10036 output/YARN_full.rsf
 
 ---
 
-### 3. Filter Dependencies
+## 🔹 Step 4: Filter Relevant Dependencies (Scheduler Capacity)
     grep "scheduler.capacity" output/YARN_full.rsf > output/yarn_filtered.rsf
 
-Line count:
+✔ Count filtered dependencies:
     wc -l output/yarn_filtered.rsf
 
-Result:
+✔ Result:
     3935 output/yarn_filtered.rsf
 
 ---
 
-### 4. Clustering Algorithms
+## 🔹 Step 5: Run Clustering Algorithms
 
-WCA:
+### ▶️ WCA
     java -Xmx4g -jar arcade_tools/arcade_core_clusterer.jar \
     algo=WCA language=java \
     deps=output/yarn_filtered.rsf measure=UEM \
     projname=WCA projpath=WCA projversion=1
 
-LIMBO:
+---
+
+### ▶️ LIMBO
     java -Xmx4g -jar arcade_tools/arcade_core_clusterer.jar \
     algo=LIMBO language=java \
     deps=output/yarn_filtered.rsf measure=IL \
     projname=LIMBO projpath=LIMBO projversion=1
 
-ACDC:
+---
+
+### ▶️ ACDC
     java -jar arcade_tools/arcade_core-ACDC.jar \
     output/yarn_filtered.rsf ACDC/
 
 ---
 
-## 📈 Results
+## 🔹 Step 6: Evaluate Results
 
+### ▶️ WCA
     echo "WCA Results:"
     wc -l WCA/*.rsf
     cut -d ' ' -f2 WCA/*.rsf | sort | uniq | wc -l
 
+---
+
+### ▶️ LIMBO
     echo "LIMBO Results:"
     wc -l LIMBO/*.rsf
     cut -d ' ' -f2 LIMBO/*.rsf | sort | uniq | wc -l
 
+---
+
+### ▶️ ACDC
     echo "ACDC Results:"
     wc -l ACDC/*.rsf
     cut -d ' ' -f2 ACDC/*.rsf | sort | uniq | wc -l
 
 ---
 
-### Output Summary
+## 📈 Results Summary
 
 | Algorithm | Lines | Clusters |
 |----------|------|----------|
@@ -125,21 +141,22 @@ ACDC:
 ---
 
 ## 🔍 Observations
-- Full extraction: 10036 dependencies  
-- Filtered dependencies: 3935  
-- WCA & LIMBO: 50 clusters (fixed threshold)  
-- ACDC: 23 clusters (structure-based)  
-- All clustering outputs: 744 relations  
 
-Insight:
+- Full system extraction → **10036 dependencies**
+- Filtered (scheduler.capacity) → **3935 dependencies**
+- WCA & LIMBO → **50 clusters** (fixed stopping criterion)
+- ACDC → **23 clusters** (structure-based)
+- All outputs → **744 relations**
+
+✔ Key Insight:
 - WCA/LIMBO → fine-grained clustering  
-- ACDC → higher-level architecture  
+- ACDC → high-level architecture  
 
 ---
 
 ## 📚 Key Learnings
-- Hadoop YARN architecture understanding  
-- Large-scale Java dependency analysis  
+- Hadoop YARN ResourceManager internals  
+- Large-scale dependency extraction  
 - ARCADE tool usage  
 - Clustering-based architecture recovery  
 - Importance of filtering  
@@ -152,33 +169,17 @@ Insight:
     ├── LIMBO/
     ├── WCA/
     ├── output/
+    │   ├── YARN_full.rsf
+    │   ├── YARN_full.fv
+    │   └── yarn_filtered.rsf
     ├── hadoop/
     ├── arcade_tools/
-    ├── tools/
     ├── filter.py
 
 ---
 
-## 🚀 How to Run
-1. Build:
-    mvn clean package -DskipTests
-
-2. Extract:
-    java -jar arcade_core_JavaParser.jar ...
-
-3. Filter:
-    grep "scheduler.capacity" ...
-
-4. Cluster:
-    WCA / LIMBO / ACDC
-
-5. Evaluate:
-    wc -l + cut commands
-
----
-
 ## 📌 Conclusion
-WCA and LIMBO produce fine-grained clusters, while ACDC captures higher-level architecture. Filtering significantly improves the quality of analysis.
+WCA and LIMBO generate detailed fine-grained clusters, while ACDC produces meaningful higher-level architectural groupings. Filtering significantly improves analysis quality and relevance.
 
 ---
 
