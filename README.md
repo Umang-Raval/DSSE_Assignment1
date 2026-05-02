@@ -21,7 +21,7 @@ The objective is to extract class dependencies and evaluate clustering algorithm
 - Rahul Borana  
 - Umang Raval  
 - Pawan  
-- Sangsa Pal  
+- Sangsaptak Pal 
 
 ---
 
@@ -88,6 +88,7 @@ ACDC:
 ## 📈 Results
 
 Commands Used:
+
     echo "WCA Results:"
     wc -l WCA/*.rsf
     cut -d ' ' -f2 WCA/*.rsf | sort | uniq | wc -l
