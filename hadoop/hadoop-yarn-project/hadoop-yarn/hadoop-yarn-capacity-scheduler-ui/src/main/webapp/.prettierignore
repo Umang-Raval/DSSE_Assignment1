@@ -1,8 +1,0 @@
-build
-.react-router
-node_modules
-coverage
-*.log
-pnpm-lock.yaml
-package-lock.json
-yarn.lock
