@@ -1,0 +1,39 @@
+Here is a merged, coherent, semantic file-level summary:
+
+**File Summary: Capacity Headroom Provider for YARN Resource Manager Scheduler**
+
+**Overview**
+----------------
+
+This Java class serves as the **Capacity Headroom Provider**, a critical component within the **YARN (Yet Another Resource Negotiator) Resource Manager Scheduler** subsystem, operating at the **Scheduling/Resource Allocation layer**. Its primary function is to calculate the available **headroom** (unused resources) for a specified queue, user, and application within a Hadoop YARN cluster, thereby informing queue resource allocation, application placement, and scheduling decisions.
+
+**Key Capabilities**
+
+* **Headroom Calculation**: Determines unused resources (headroom) for a given queue, user, and application based on current queue limits and cluster resources.
+* **Partition Handling**: Adapts calculation based on application-requested partitions - either aggregating headroom across multiple partitions or considering the entire queue if no specific partitions are requested (or the default label is used).
+
+**Interfaces and Data Exchange**
+
+* **Inputs**:
+	+ User Information (`UsersManager.User`)
+	+ Queue Details (`AbstractLeafQueue`)
+	+ Application Context (`FiCaSchedulerApp`)
+	+ Queue Resource Limits (`AbstractLeafQueue.QueueResourceLimitsInfo`)
+* **Outputs**:
+	+ Calculated Headroom (`Resource`, specifying memory size)
+
+**Technical Dependencies**
+
+* `org.apache.hadoop.yarn.api.records.Resource`
+* `org.apache.hadoop.yarn.server.resourcemanager.nodelabels.RMNodeLabelsManager`
+* `org.apache.hadoop.yarn.server.resourcemanager.scheduler.common.fica.FiCaSchedulerApp`
+* `org.apache.hadoop.yarn.util.resource.Resources`
+
+**Integration with Scheduler Ecosystem**
+
+* **Dependent On**:
+	+ `AbstractLeafQueue` for queue-specific logic
+	+ `FiCaSchedulerApp` for application scheduling context
+* **Influence On**:
+	+ Queue resource allocation strategies
+	+ Application placement and scheduling outcomes within the YARN cluster

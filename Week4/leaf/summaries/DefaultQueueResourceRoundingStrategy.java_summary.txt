@@ -1,0 +1,38 @@
+Here is the merged, coherent, semantic file-level summary:
+
+**Resource Rounding Strategy Component**
+
+**Overview**
+----------------
+
+This component, situated within the Scheduling and Resource Management layer (utilizing YARN Resource Manager), serves as the **Resource Rounding Strategy**. Its primary purpose is to apply predefined rounding rules during resource calculations for efficient queue management.
+
+**Functionality and Logic**
+-----------------------------
+
+* **Key Functionality**: Rounds resource values based on a predefined capacity type precedence, distinguishing between multiple resource types, with a notable exception handling for the WEIGHT resource type.
+* **Core Rounding Logic**:
+	1. For the last precedence resource type (typically WEIGHT), rounds the resource value to the **nearest integer** using `Math.round`.
+	2. For all other resource types, rounds down the resource value to the **nearest lower integer** using `Math.floor`.
+
+**API and Data Exchange**
+-------------------------
+
+* **Inputs**:
+	+ `resourceValue` (**double**): The value to be rounded.
+	+ `capacityVectorEntry` (**QueueCapacityVectorEntry**): Provides `vectorResourceType` for informing rounding decisions.
+* **Outputs**:
+	+ `roundedResource` (**double**): The rounded value of the input `resourceValue`.
+
+**Dependencies and Integrations**
+----------------------------------
+
+* **Package Dependency**: `org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity`
+* **Specific Class Dependencies**:
+	+ `QueueCapacityVector.QueueCapacityVectorEntry`
+	+ `ResourceUnitCapacityType`
+* **Expected Users**:
+	+ Queue Managers
+	+ Resource Allocators
+* **Integration Points**:
+	+ Capacity scheduling algorithms, particularly during remaining capacity calculations or resource allocation processes.

@@ -1,0 +1,45 @@
+Here is a **coherent semantic file-level summary** merging all the provided chunk summaries:
+
+**File Summary: QueueCapacities.java**
+
+**Overview**
+----------------
+
+* **Architectural Role**: Component within the Resource Management Layer (YARN's Resource Manager)
+* **Primary Function**: Manages capacity-related settings for queues, providing structured storage and access to various capacity types, optionally scoped by node labels.
+
+**Key Capabilities**
+----------------------
+
+* **Capacity Management**:
+	+ Stores and retrieves multiple capacity types (e.g., used, absolute used, maximum, etc.) for queues with optional node labels.
+	+ Supports setting, getting, and clearing capacity values at both queue (default/no-label) and node-label levels.
+* **Concurrency Control**: Ensures thread-safety via `ReentrantReadWriteLock` for simultaneous access.
+
+**Technical Details**
+---------------------
+
+* **Data Structure**: Utilizes a `HashMap` (`capacitiesMap`) keyed by node labels (or no-label for queue defaults) to store capacity settings.
+* **Enum-driven Access**: Employs `CapacityType` enum for structured management of different capacity types.
+* **Dependencies**:
+	- `org.apache.commons.lang3.StringUtils` for string utilities
+	- Hadoop YARN node labels managers for constants (e.g., `NO_LABEL`)
+
+**Integration Points**
+--------------------
+
+* **Expected Interactions** (not directly shown in this code):
+	1. **Scheduler Algorithms**: Applies capacity constraints during job/resource allocations.
+	2. **Queue Management**: Adjusts or clears capacity settings during queue setup, updates, or teardown.
+	3. **Resource Allocation**: Enforces capacity limits during resource assignments to applications/jobs.
+
+**Input/Output Interface**
+-----------------------------
+
+* **Inputs**:
+	+ Node labels (strings)
+	+ Capacity values (floats)
+	+ `isRoot` flag (boolean, indicating root queue management)
+* **Outputs**:
+	+ Stored capacity values (floats) for various capacity types, accessible by node label or queue default
+	+ Sets of existing node labels (as `HashSet<String>`)

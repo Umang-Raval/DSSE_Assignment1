@@ -1,0 +1,34 @@
+Here is a merged, coherent, semantic file-level summary:
+
+**File Summary: YARN Resource Manager Scheduler Context Object**
+
+**Overview**
+This Java class serves as a Context Object within the YARN (Yet Another Resource Negotiator) Resource Manager's Scheduler, encapsulating intermediate calculation values for a full queue capacity update phase.
+
+**Primary Responsibilities**
+
+* Manages transient state for queue capacity updates
+* Calculates and provides labeled cluster resource information
+* Tracks and accumulates update warnings
+
+**Key Interfaces and Operations**
+
+* Initializes with: `updatedClusterResource` and `labelsManager`
+* Exposes:
+	+ `getUpdatedClusterResource(label)`: Returns calculated available cluster resources based on node labeling
+	+ `addUpdateWarning(warning)` and `getUpdateWarnings()`: Handles accumulation and retrieval of update process warnings
+* Produces:
+	+ Calculated `Resource` objects representing cluster resources
+	+ Collected `QueueUpdateWarning` instances indicating update issues
+
+**Technical Dependencies**
+
+* `org.apache.hadoop.yarn.api.records.Resource`
+* `org.apache.hadoop.yarn.server.resourcemanager.nodelabels.RMNodeLabelsManager`
+* `java.util` classes (notably `ArrayList`, `List`)
+
+**Scheduler Ecosystem Interactions**
+
+* **Initialization**: Receives data from Resource Manager or Scheduler
+* **Data Provision**: Supplies calculated resources to Queue or Scheduler components
+* **Notification**: Informs Scheduler or Administrator (via warnings) about potential update issues (no direct component references beyond dependencies)

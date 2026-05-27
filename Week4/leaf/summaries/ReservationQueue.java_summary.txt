@@ -1,0 +1,47 @@
+Here is a merged, coherent, semantic file-level summary:
+
+**File Summary: ReservationQueue.java**
+
+**Overview**
+----------------
+
+The `ReservationQueue` component, part of the Capacity Scheduler's Business Logic Layer within the YARN Resource Manager subsystem, dynamically manages leaf queues for resource reservations in a Hadoop YARN cluster.
+
+**Key Responsibilities**
+-------------------------
+
+* **Queue Management**: Handles queue configuration, entitlements, and capacity updates.
+* **Core Logic**:
+	+ Initializes/reinitializes queue configurations based on parent `PlanQueue` settings.
+	+ Updates user/application limits (quotas) and queue capacity (entitlements).
+
+**Interfaces and Data Exchange**
+---------------------------------
+
+* **Inputs**:
+	- `CapacitySchedulerQueueContext`
+	- `queueName`
+	- `parent` (`PlanQueue`)
+	- `CSQueue` and `clusterResource` (for reinitialization)
+* **Outputs**:
+	- Configured `ReservationQueue` instance
+	- Updated queue statistics (via `CSQueueUtils`)
+
+**Dependencies and Integrations**
+-------------------------------
+
+* **Depends On**:
+	+ `AbstractAutoCreatedLeafQueue`
+	+ `PlanQueue`
+	+ Implicitly: `ReservationSystem`
+	+ `org.apache.hadoop.yarn` APIs (e.g., `Resource`, `CapacitySchedulerQueueContext`)
+	+ `org.slf4j` for logging
+* **Transitive Dependencies**: Various Hadoop YARN and SLF4J libraries
+
+**System Interactions**
+----------------------
+
+* **Hierarchy**: Child of `PlanQueue`, utilizing its settings for initialization.
+* **Collaborators**:
+	+ `CSQueueUtils`: For updating queue metrics.
+	+ (Implicit): `labelManager` during queue setup (not shown in this snippet).

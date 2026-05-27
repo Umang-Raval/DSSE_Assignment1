@@ -1,0 +1,49 @@
+Here's a merged, coherent, semantic file-level summary:
+
+**File Summary: Legacy Mapping Rule to JSON Converter (Resource Manager - Hadoop YARN)**
+
+**Overview**
+-----------
+
+This Java file serves as a **Legacy Mapping Rule to JSON Converter**, residing within the **Resource Manager** layer of Hadoop YARN, specifically supporting the **Capacity Scheduler**. It converts legacy user group and application name mapping rules into JSON format, facilitating resource allocation decisions.
+
+**Key Functionality**
+----------------------
+
+* Converts legacy mapping rules (user groups, application names) to JSON
+* Supports multiple mapping policies (user, group, application, primary/secondary group)
+* Handles special tokens for matching all users or applications
+* Generates JSON nodes representing mapping rules for resource allocation (queue placement) based on input parameters (match, target)
+
+**Core Architecture and Logic**
+--------------------------------
+
+* **Main Method**: `convert()` orchestrates the conversion process, creating a basic JSON config structure, processing/add-ing mapping rules, and returning the converted JSON string
+* **Helper Methods**:
+	+ `splitRule()`: Splits rules into parts with validation
+	+ `createDefaultRuleNode()`: Creates a default rule node with common fields
+	+ Specific rule creation methods (e.g., `createUserMappingRule()`, `createApplicationNameMappingRule()`, `createGroupMappingRule()`)
+* **Policy Application**: Applies policy and target queue settings based on target path patterns (e.g., `%user`, `%application`)
+
+**Inputs, Outputs, and Dependencies**
+------------------------------------------
+
+* **Inputs**:
+	+ User Group Mapping Rules (String/Collections<String>)
+	+ Application Name Mapping Rules (String/Collections<String>)
+	+ `match` (string): name of the group/application to match
+	+ `target` (string): target queue with optional path variables
+* **Outputs**:
+	+ Converted JSON String (or null if no rules are set)
+	+ `ObjectNode` instances representing generated mapping rules
+* **Dependencies**:
+	+ `com.fasterxml.jackson` (JSON processing)
+	+ `org.apache.hadoop.util` (utility functions)
+	+ `org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity` (Capacity Scheduler-related classes)
+	+ Internal: `QueuePath` class, `createDefaultRuleNode` method
+
+**Interactions with Scheduler Components**
+------------------------------------------------
+
+* **Capacity Scheduler**: Feeds converted JSON output for resource allocation decisions
+* **Resource Manager**: Interacts with other RM components for resource management and scheduling

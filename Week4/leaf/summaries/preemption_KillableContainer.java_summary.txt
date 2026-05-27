@@ -1,0 +1,33 @@
+Here is a merged, coherent, semantic file-level summary:
+
+**File Summary: `PreemptableContainer.java`**
+
+**Overview:**
+This Java class serves as a data container/wrapper within the YARN Resource Manager's capacity scheduling context, specifically designed for efficient handling of containers marked for killing/preemption.
+
+**Key Characteristics:**
+
+* **Architectural Role:** Data Container/Wrapper for preemptable containers
+* **Primary Functionality:** Encapsulates a container with its associated partition and queue, facilitating informed preemption decisions
+* **Logic Complexity:** Simple, employing straightforward getter/setter-based encapsulation without intricate computations or decision-making logic
+
+**Interface and Data Exchange:**
+
+* **Inputs:**
+	+ `RMContainer` object
+	+ `partition` (String)
+	+ `leafQueueName` (String)
+* **Outputs:**
+	+ Getter methods for each input attribute:
+		- `getRMContainer`
+		- `getNodePartition`
+		- `getLeafQueueName`
+
+**Dependencies and Integrations:**
+
+* **Direct Dependency:** `org.apache.hadoop.yarn.server.resourcemanager.rmcontainer.RMContainer`
+* **Expected Scheduler Component Interactions:**
+	+ Utilized by Capacity Scheduler or Preemption modules for streamlined access and management of preemptable containers
+	+ Typical interactions may involve:
+			- Instantiation and passage to preemption logic for evaluation purposes
+			- Retrieval of the enclosed `RMContainer` for execution of actual kill operations

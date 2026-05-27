@@ -1,0 +1,28 @@
+Here is a merged, coherent, semantic file-level summary:
+
+**File Summary: SchedulingMode Enum (Java) - Hadoop YARN Resource Allocation**
+
+**Overview**
+Defines the `SchedulingMode` enum, dictating resource allocation behavior in a distributed Hadoop YARN system, specifically governing how the scheduler handles resource partitioning during scheduling decisions.
+
+**Key Aspects**
+
+* **Architectural Role**: Configuration/Policy Enum for Hadoop YARN's resource allocation scheduling behavior
+* **Functionality**: Specifies whether to respect or ignore partition exclusivity when allocating resources to applications
+* **Core Logic**: Partition Awareness with two possible outcomes:
+	+ **RESPECT_PARTITION_EXCLUSIVITY**: Enforces partition exclusivity
+	+ **IGNORE_PARTITION_EXCLUSIVITY**: Allows non-partitioned resource allocation despite existing partitions
+* **Interfaces**:
+	+ **Inputs**: Predefined enum values (none dynamic)
+	+ **Outputs**: One of the two aforementioned enum values
+* **Dependencies**:
+	+ **Package**: `org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity`
+	+ **Libraries**: Pure Java, no external dependencies
+
+**Integration and Usage**
+Expected to interact with Scheduler Components as follows:
+
+1. **Scheduler Preliminary Check**: Verifies node partitioning and application resource requirements.
+2. **Scheduling Decision**:
+	* **RESPECT_PARTITION_EXCLUSIVITY**: Enforces partition exclusivity based on configuration.
+	* **IGNORE_PARTITION_EXCLUSIVITY**: Permits non-partitioned allocations despite existing partitions, as per configuration.

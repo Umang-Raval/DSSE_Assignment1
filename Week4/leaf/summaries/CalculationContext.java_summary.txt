@@ -1,0 +1,36 @@
+Here is a merged, coherent, semantic file-level summary:
+
+**File Summary: YARN Scheduler Capacity Planning Data Container/Calculator**
+
+**Overview**
+This Java class serves as a **Data Container and Calculator** within the YARN (Yet Another Resource Negotiator) scheduler's capacity planning component. It manages calculation contexts, stores key attributes, and provides essential data for resource capacity planning iterations.
+
+**Key Responsibilities**
+
+* **Data Management**: Encapsulates and provides access to `resourceName`, `capacityType`, and `queue` (CSQueue) for calculation contexts.
+* **Calculation Services**: Offers shortcuts for retrieving minimum and maximum **QueueCapacityVectorEntry** objects based on input `label` (node label).
+* **Attribute Access**: Exposes getter methods for encapsulated attributes.
+
+**Interfaces and Data Exchange**
+
+* **Input Parameters**:
+	+ `resourceName` (String)
+	+ `capacityType` (ResourceUnitCapacityType)
+	+ `queue` (CSQueue)
+	+ `label` (String, for targeted capacity vector entry retrieval)
+* **Output Values**:
+	+ Encapsulated attribute values (via getters)
+	+ Calculated `QueueCapacityVectorEntry` objects (minimum and maximum, based on input `label`)
+
+**Dependencies and Integrations**
+
+* **Dependent Libraries**:
+	+ `org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.QueueCapacityVector`
+	+ `org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.QueueCapacityVector.ResourceUnitCapacityType`
+	+ Custom/Framework `CSQueue` implementation
+* **Scheduled Interactions**:
+	+ Receives `CSQueue` instance from higher-level scheduler components.
+	+ Supplies calculated `QueueCapacityVectorEntry` instances to:
+		- Queue Managers
+		- Resource Allocators
+		- Scheduling Algorithms (e.g., CapacityScheduler, FairScheduler) for informed capacity planning decisions.

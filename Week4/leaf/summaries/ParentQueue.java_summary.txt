@@ -1,0 +1,38 @@
+Here is a merged, coherent, semantic file-level summary:
+
+**File Summary: `ParentQueue.java`**
+
+**Overview**
+----------------
+
+The `ParentQueue` class, extending `AbstractParentQueue`, resides in the **Business Logic Layer** of the Capacity Scheduler and Resource Manager (YARN) subsystem. It dynamically manages child queues within a capacity-scheduled YARN cluster, enforcing queue limits, capacity configurations, and resource updates.
+
+**Key Responsibilities**
+-------------------------
+
+* Dynamically creates leaf or parent child queues while ensuring consistency with existing queues, max queue limits, and capacity configurations.
+* Updates internal state and recalculates cluster resources upon successful child queue additions.
+* Interacts with other scheduler components to retrieve queues, update cluster resources, and fetch configuration settings.
+
+**Technical Details**
+----------------------
+
+* **Inputs**:
+	+ `CapacitySchedulerQueueContext` instance (`queueContext`)
+	+ Constructor parameters: `queueName`, `parent`, `old`, `isDynamic`
+	+ Method parameter: `queuePath` (for dynamic queue additions)
+* **Outputs**:
+	+ Newly created or existing `CSQueue` instances
+	+ Exceptions: `SchedulerDynamicEditException`, `IOException` (on errors)
+* **Dependencies**:
+	+ `org.apache.hadoop.yarn.server.resourcemanager.scheduler` package classes
+	+ `org.slf4j` for logging
+	+ `java.io` for I/O operations
+* **Notable Methods**: `addDynamicChildQueue` (core logic for dynamic child queue management)
+
+**Integration Points**
+-----------------------
+
+* **Queue Manager**: Utilizes `getQueueByFullName` for queue retrieval
+* **Cluster Resource**: Updates resources via `updateClusterResource`
+* **Configuration**: Retrieves settings using `queueContext.getConfiguration()`

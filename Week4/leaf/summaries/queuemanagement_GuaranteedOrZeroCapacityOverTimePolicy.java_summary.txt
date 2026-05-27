@@ -1,0 +1,48 @@
+**Unified Semantic File-Level Summary**
+
+**Component:** Guaranteed Or Zero Capacity Over Time Policy for Auto-Created Leaf Queues
+**Subsystem:** YARN (Yet Another Resource Negotiator) Resource Manager, Scheduler Component
+**Responsibility:** Dynamically manages capacity allocation and lifecycle (activation/deactivation) of auto-created leaf queues in a hierarchical scheduling system, ensuring optimal resource utilization.
+
+**Key Functionality:**
+
+1. **Capacity Management:**
+	* Computes and adjusts child queue capacities based on First-Come-First-Served (FCFS) application submission order.
+	* Updates leaf queue capacities to 0 when no pending or running applications exist under that queue.
+2. **Lifecycle Management:**
+	* Dynamically activates/deactivates leaf queues based on pending applications and available resource capacity.
+	* Provides initial configurations for newly created leaf queues, considering available capacity and templates.
+3. **Integration with Scheduler:**
+	* Offers a list of suggested `QueueManagementChange` objects for scheduler validation and commitment.
+	* Expects scheduler calls for committing validated changes, ensuring synchronized state updates.
+
+**Core Logic Highlights:**
+
+1. `computeQueueManagementChanges()`:
+	* Updates template absolute capacities (weight mode).
+	* Synchronizes internal leaf queue state with the current system state.
+	* Calculates FCFS-based entitlements for each leaf queue, returning `QueueManagementChange` suggestions.
+2. `activateLeafQueues` / `deactivateLeafQueuesIfInactive`:
+	* Sorts pending applications to identify queues for activation/deactivation.
+	* Updates capacities and configurations based on computed entitlements.
+3. `getInitialLeafQueueConfiguration`:
+	* Checks available capacity against templates for new leaf queues.
+	* Sets initial capacity and state (active/inactive) accordingly.
+
+**Inputs and Outputs:**
+
+* **Inputs:**
+	+ `AbstractParentQueue` instance (initialized via `init()`).
+	+ System state (implicitly through `managedParentQueue` and its methods).
+	+ Node labels (for partition considerations).
+	+ Pending applications list.
+* **Outputs:**
+	+ `List<QueueManagementChange>` for scheduler validation and commitment.
+	+ Updated `LeafQueue` states (active/inactive) and capacities.
+	+ Logged messages for operational visibility.
+
+**Dependencies:**
+
+* `org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity` package classes.
+* `org.apache.hadoop.yarn.api.records.Resource`.
+* `org.apache.hadoop.yarn.util` package classes (e.g., `Clock`,

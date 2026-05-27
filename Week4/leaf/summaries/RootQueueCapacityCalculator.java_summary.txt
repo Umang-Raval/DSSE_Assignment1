@@ -1,0 +1,45 @@
+Here is the merged, coherent, semantic file-level summary:
+
+**File Summary: `RootQueueCapacityCalculator.java`**
+
+**Overview**
+----------------
+
+The `RootQueueCapacityCalculator` component, residing within the **Resource Management Layer** of the **YARN Resource Manager Scheduler Subsystem (Capacity Scheduling)**, is responsible for calculating resource prerequisites and capacities for the root queue in a YARN cluster.
+
+**Key Responsibilities**
+-------------------------
+
+* **Core Functionality**: Normalizes resource ratios, retrieves minimum/maximum resources based on updated cluster resources, and updates queue capacities accordingly.
+* **Calculation Process**:
+	1. `calculateResourcePrerequisites`: Normalizes resource ratios.
+	2. `calculateMinimumResource` and `calculateMaximumResource`: Retrieve minimum/maximum resources based on updated cluster resources.
+	3. `updateCapacitiesAfterCalculation`: Updates queue capacities post-calculation.
+
+**Interfaces and Data Exchange**
+---------------------------------
+
+* **Inputs**:
+	+ `ResourceCalculationDriver` (calculation context and updated cluster resources)
+	+ `CalculationContext`
+	+ `String label` (resource label)
+	+ `CSQueue queue` (for capacity updates)
+* **Outputs**:
+	+ Calculated minimum/maximum resource values (`double`)
+	+ **Side Effect**: Updated `CSQueue` capacities
+
+**Dependencies and Collaborations**
+--------------------------------------
+
+* **Extends**: `AbstractQueueCapacityCalculator`
+* **Static Method Invocation**: `AbsoluteResourceCapacityCalculator`
+* **Dependent On**:
+	+ `ResourceCalculationDriver`
+	+ `CalculationContext`
+	+ `CSQueue`
+* **Collaborations**:
+	+ **With `ResourceCalculationDriver`**: Exchanges calculation context and updated cluster resources.
+	+ **With `CSQueue`**: Updates queue capacities after calculation.
+* **Impacted By**:
+	+ Cluster resource updates (influencing calculations)
+	+ Queue configuration changes (weight, capacity settings)

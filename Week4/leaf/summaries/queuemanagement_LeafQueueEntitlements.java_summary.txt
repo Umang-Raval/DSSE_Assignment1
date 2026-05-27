@@ -1,0 +1,49 @@
+Here is a coherent, semantic, file-level summary merging all the provided chunk summaries:
+
+**Leaf Queue Entitlement Manager**
+=====================================
+
+**Overview**
+---------------
+
+This Java component, part of the Hadoop YARN Resource Management layer, manages capacity entitlements for automatically created leaf queues, providing crucial data for informed queue management decisions.
+
+**Key Responsibilities & Functionality**
+--------------------------------------
+
+* **Primary Functions:**
+	+ Stores and retrieves capacity entitlements for leaf queues.
+	+ Supplies entitlement data to support queue management changes.
+* **Core Logical Operations:**
+	+ Implements lazy initialization of `QueueCapacities` for unknown leaf queue paths.
+	+ Maintains a mapping of leaf queue paths to their respective `QueueCapacities`.
+
+**Interfaces & Data Exchange**
+-----------------------------
+
+* **Inputs:**
+	- `AutoCreatedLeafQueue` objects for retrieving queue capacities.
+	- Leaf queue paths (`String`) for direct capacity lookups.
+	- Bi-functions for transforming data into `QueueManagementChange` objects.
+* **Outputs:**
+	- `QueueCapacities` objects for specific queues or paths.
+	- A `Map<String, QueueCapacities>` for comprehensive entitlements retrieval.
+	- Lists of `QueueManagementChange` for applying adjustments.
+
+**Dependencies & Integrations**
+--------------------------------
+
+* **Hadoop YARN Dependencies:**
+	- `org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity` package for domain models (`AutoCreatedLeafQueue`, `QueueCapacities`, `QueueManagementChange`).
+* **Java Standard Library:**
+	- Utilizes collections (`HashMap`, `List`, `Map`) and functional programming (`BiFunction`, `Collectors`) for efficient data handling.
+
+**Scheduler Component Interactions**
+-------------------------------------
+
+* **Expected Usage:**
+	- **Resource Manager:** Leverages this component's outputs to inform scheduling decisions based on queue capacities.
+	- **Scheduler:** May apply `QueueManagementChange` outputs to adjust queue configurations.
+* **Assumed Interfaces:**
+	- `AutoCreatedLeafQueue` provides necessary queue path information.
+	- `QueueManagementChange` encapsulates adjustments to queue setups.

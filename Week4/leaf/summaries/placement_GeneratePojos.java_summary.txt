@@ -1,0 +1,26 @@
+Here is a merged, coherent, semantic file-level summary:
+
+**File Summary: JSON Schema to Java POJO Generator for YARN Resource Manager's Capacity Scheduler**
+
+**Overview**
+This utility/tool generates Java Plain Old Java Objects (POJOs) from a provided JSON schema, specifically designed for the Apache Hadoop YARN Resource Manager's Capacity Scheduler.
+
+**Key Functionality and Architecture**
+The tool regenerates Java POJOs based on a given JSON schema, utilizing the `jsonschema2pojo` library. It operates without direct interactions with other Scheduler components, producing output likely consumed by other parts of the YARN Resource Manager's Capacity Scheduler for configuration or data processing.
+
+**Technical Details**
+
+* **Input**:
+	+ `MappingRulesDescription.json` (JSON schema file)
+	+ Note: Command-line arguments (`args`) are currently not utilized.
+* **Output**:
+	+ Generated Java POJO source files in `src/main/java`
+* **Core Logic Steps**:
+	1. Loads JSON schema from a specified URL.
+	2. Configures generation settings (e.g., disables builders, uses primitives).
+	3. Maps schema to Java code using `SchemaMapper`.
+	4. Generates Java POJOs into a target package using `JCodeModel`.
+* **Dependencies**:
+	+ `jsonschema2pojo` for JSON schema to Java POJO conversion
+	+ `com.sun.codemodel` for Java code generation
+	+ Indirect dependency on `org.apache.hadoop.yarn` as part of the broader YARN project

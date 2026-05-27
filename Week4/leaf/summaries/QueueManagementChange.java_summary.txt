@@ -1,0 +1,46 @@
+Here is a merged, coherent, semantic file-level summary:
+
+**Queue Management Change Handler**
+=====================================
+
+**Overview**
+---------------
+
+This Java component, part of the Resource Manager's Scheduler in Hadoop YARN, encapsulates queue entitlement and state updates for dynamic capacity adjustments.
+
+**Responsibilities & Functionality**
+--------------------------------------
+
+* Manages updates to queue configurations (entitlements and states)
+* Supports dynamic capacity adjustments through queue updates
+* Handles queue updates based on specified `QueueAction` (currently limited to `UPDATE_QUEUE`)
+* Updates queue state (`QueueState`) and/or entitlements (`AutoCreatedLeafQueueConfig`) as necessary
+
+**Interface & Data Exchange**
+-----------------------------
+
+* **Inputs:**
+	+ `CSQueue` object (queue to be updated)
+	+ `QueueAction` enumeration (update type)
+	+ Optionally: `QueueState` (target queue state) and `AutoCreatedLeafQueueConfig` (updated entitlement configuration)
+* **Outputs:**
+	+ Updated `QueueState` (if applicable)
+	+ Updated `AutoCreatedLeafQueueConfig` (if applicable)
+
+**Dependencies & Integrations**
+---------------------------
+
+* Depends on:
+	+ `org.apache.hadoop.yarn.api.records.QueueState`
+	+ `org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CSQueue`
+	+ `org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.AutoCreatedLeafQueueConfig`
+* Interacts with:
+	+ Scheduler's core logic (receives queue update requests)
+	+ Notifies Scheduler of updated queue states and/or entitlements
+	+ Potential collaborators: Scheduler's Queue Manager, Resource Manager's Capacity Manager
+
+**Layer & Architectural Context**
+--------------------------------
+
+* **Component:** Queue Management Change Handler
+* **Layer:** Scheduler Component (within Resource Manager, Hadoop YARN)

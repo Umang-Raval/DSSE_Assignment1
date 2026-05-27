@@ -1,0 +1,38 @@
+Here is a merged, coherent, semantic file-level summary:
+
+**File Summary: `AppPriorityACLConfigurationParser.java`**
+
+**Overview**
+----------------
+
+This Java class, `AppPriorityACLConfigurationParser`, operates within the Resource Management layer of Apache Hadoop YARN (Yet Another Resource Negotiator), specifically serving the Capacity Scheduler component.
+
+**Primary Function**
+-------------------
+
+* **Purpose:** Parse, validate, and normalize Application Priority Access Control List (ACL) configurations from `capacity-scheduler.xml`.
+* **Key Operations:**
+	1. Regex-based parsing of ACL strings.
+	2. Iterative processing and validation of ACL group key-value pairs against the cluster's maximum priority setting.
+	3. Generation of normalized `AppPriorityACLGroup` objects for downstream processing.
+
+**Input/Output Specifications**
+-----------------------------
+
+* **Inputs:**
+	+ `Priority` object (cluster maximum priority).
+	+ `String` (ACL configuration from `capacity-scheduler.xml`).
+* **Outputs:**
+	+ `List<AppPriorityACLGroup>` (parsed, validated ACL configurations).
+
+**Dependencies & Integrations**
+--------------------------------
+
+* **Dependent Libraries:**
+	+ `org.apache.hadoop.yarn.api.records.Priority`.
+	+ `org.apache.hadoop.security.authorize.AccessControlList`.
+	+ `org.apache.hadoop.util.StringUtils`.
+	+ `org.slf4j.Logger` (logging).
+* **System Integrations:**
+	+ **Dependent On:** Cluster configuration (max priority), `capacity-scheduler.xml`.
+	+ **Influences:** Application submission (via `AppPriorityACLGroup` objects), indirect influence on resource allocation decisions through ACL configurations.

@@ -1,0 +1,47 @@
+Here is a coherent, semantic file-level summary merging all the provided chunk summaries:
+
+**File-Level Summary: `CapacitySchedulerQueueCapacityHandler.java`**
+
+**Overview**
+----------------
+
+This Java class, `CapacitySchedulerQueueCapacityHandler`, resides within the **Business Logic Layer** of the YARN (Yet Another Resource Negotiator) Resource Manager's Scheduler subsystem. It plays a crucial role in managing queue capacity and resource value calculations for efficient resource allocation within a YARN cluster.
+
+**Key Responsibilities**
+-------------------------
+
+* **Capacity Management**: Calculates and updates queue capacities based on effective minimum and maximum resource values.
+* **Resource Value Calculations**: Handles multiple capacity types, including absolute, percentage, and weight-based calculations.
+* **Integration**: Collaborates with various scheduler components to influence queue capacity updates and resource allocation decisions.
+
+**Technical Details**
+----------------------
+
+* **Core Methods**:
+	+ `updateChildren()` and `updateRoot()`: Recursively calculate and update queue capacities.
+	+ `setQueueCapacities()`: Determines and sets capacity values for a specified queue and label.
+* **Drivers**:
+	+ `ResourceCalculationDriver` for queue-specific calculations.
+	+ `RootCalculationDriver` for root queue calculations.
+* **Inputs**:
+	+ `clusterResource`
+	+ `CSQueue` instance
+	+ `RMNodeLabelsManager` instance
+	+ `CapacitySchedulerConfiguration` instance
+* **Outputs**:
+	+ Updated `QueueCapacityUpdateContext` instances.
+	+ Modified `CSQueue` instances with recalculated capacities.
+* **Dependencies**:
+	+ Internal: `org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity` package, `RMNodeLabelsManager`, `ResourceLimits`, `ResourceCalculator`, `ResourceUtils`.
+	+ External: `org.apache.commons.collections4`, `org.apache.hadoop.yarn.api.records`, `org.apache.hadoop.yarn.util.resource`, `org.slf4j`.
+
+**Scheduler Component Interactions**
+------------------------------------
+
+* **Collaborators**:
+	+ `CSQueue` instances (`AbstractCSQueue`, `ReservationQueue`, `PlanQueue`).
+	+ `ResourceLimits` for resource constraints.
+	+ `RMNodeLabelsManager` for node labels.
+* **Influence**:
+	+ Queue capacity calculations and updates.
+	+ Resource allocation decisions in the YARN scheduler.

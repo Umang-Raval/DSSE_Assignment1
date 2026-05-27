@@ -1,0 +1,24 @@
+Here is a merged, coherent, semantic file-level summary:
+
+**File Summary: YARN Resource Manager - Metrics Collector/Reporter**
+
+**Overview**
+This Java class serves as the **Metrics Collector/Reporter** within the **YARN (Yet Another Resource Negotiator) Resource Manager Subsystem**. Its primary purpose is to **track and expose key performance metrics for the Capacity Scheduler**, enabling insights into resource utilization and system efficiency.
+
+**Key Aspects**
+
+* **Functionality**: Collects and reports metrics on container allocation, commit successes/failures, node updates, and scheduler node heartbeat intervals. Provides getter methods for testing purposes.
+* **Design Patterns**: Employs the Singleton pattern for global, thread-safe access to the metrics instance, utilizing lazy initialization with double-checked locking.
+* **Integration**:
+	+ Registers metrics with the `MetricsSystem` (e.g., `DefaultMetricsSystem`) for standardized exposure.
+	+ Updates metrics through `addXxx()` methods (e.g., `addAllocate()`, `addCommitSuccess()`).
+* **Data Exchange**:
+	+ **Inputs**: Accepts latency values for various events and heartbeat intervals.
+	+ **Outputs**: Exposes metrics (rates, quantiles) via the `MetricsSystem` and provides getter methods for testing.
+* **Dependencies**:
+	+ `org.apache.hadoop.metrics2` for metrics handling
+	+ `org.apache.hadoop.classification` for configuration
+	+ `java.util.concurrent.atomic` for thread safety
+
+**System Interactions**
+While not explicitly shown, this component is expected to interact closely with the **Capacity Scheduler**, which likely updates metrics via `addXxx()` methods. Additionally, other system components may query these metrics through the `MetricsSystem` or the provided tester getter methods.

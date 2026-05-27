@@ -1,0 +1,43 @@
+Here is a **merged, coherent, semantic file-level summary** combining the essential aspects of both chunks, highlighting the relationships between them:
+
+**File-Level Summary: `ZKConfigurationStore` with Supporting Utility**
+
+* **Architectural Role:**
+	+ **Primary Component:** `ZKConfigurationStore` (Storage/Repository Layer)
+	+ **Supporting Utility:** Anonymous utility class (likely embedded within the same file/package as `ZKConfigurationStore`) providing low-level helper functions (Utility/Helper Layer)
+
+* **Key Functionality:**
+	+ **`ZKConfigurationStore`:**
+		- Manages YARN configuration storage using Apache ZooKeeper
+		- Stores/retrieves YARN config data, handles versioning, logs mutations, and confirms/stores updated configs
+	+ **Supporting Utility:**
+		- Performs unsafe casting between `Object` and generic types
+		- Ensures resource closure for `zkManager` instances
+
+* **Core Logic Overview:**
+	+ **`ZKConfigurationStore`:**
+		- Initializes ZooKeeper connections and paths
+		- Executes storage operations (store version, log mutation, confirm mutation)
+		- Retrieves current configurations from ZooKeeper
+	+ **Supporting Utility:**
+		- `unsafeCast`: Unchecked casting with `ClassCastException` handling
+		- `close`: Safely closes `zkManager` resources, throwing `IOException` on failure
+
+* **Inputs and Outputs:**
+	+ **`ZKConfigurationStore`:**
+		- **Inputs:** `Configuration` objects, `LogMutation` objects, `RMContext`
+		- **Outputs:** Stored config data in ZooKeeper, retrieved `Configuration` objects, logged mutation history
+	+ **Supporting Utility:**
+		- **Inputs:** `Object` for casting, implicit `zkManager` instance for closure
+		- **Outputs:** Casted objects of generic type `T`, no output for `close` (resource action)
+
+* **Dependencies:**
+	+ **External Libraries:**
+		- Apache ZooKeeper (`org.apache.zookeeper`)
+		- Apache Commons IO (`org.apache.commons.io`)
+		- Apache Hadoop YARN (`org.apache.hadoop.yarn`)
+		- SLF4J Logging API (`org.slf4j`)
+	+ **Internal Dependencies:**
+		- `YarnConfiguration`
+		- `RMContext`
+		- `ZKCuratorManager` (util

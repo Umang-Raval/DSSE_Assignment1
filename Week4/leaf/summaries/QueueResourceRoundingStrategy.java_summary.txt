@@ -1,0 +1,28 @@
+Here is a merged, coherent, semantic file-level summary:
+
+**File Summary: Resource Rounding Strategy Interface (Apache Hadoop YARN Resource Manager - Scheduling Layer)**
+
+**Overview**
+----------------
+
+This Java interface defines the architectural role of a **Resource Rounding Strategy** within the **Scheduling Layer** of the **Apache Hadoop YARN (Yet Another Resource Negotiator) Resource Manager System**. Its primary function is to provide a standardized approach for rounding calculated floating-point resource values to whole numbers, crucial for informed scheduling decisions.
+
+**Key Aspects**
+-----------------
+
+* **Functionality**: Specifies an interface for rounding resource values to whole numbers based on a defined strategy.
+* **Input/Output**:
+	+ **Inputs**:
+		- `resourceValue` (double): Calculated resource value requiring rounding.
+		- `capacityVectorEntry` (`QueueCapacityVectorEntry` object): Relevant configured capacity entry.
+	+ **Outputs**:
+		- `roundedResourceValue` (double): The rounded resource value resulting from the applied strategy.
+* **Dependencies**: Leverages `QueueCapacityVectorEntry` from `org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.QueueCapacityVector`.
+* **System Interactions**:
+	+ **Capacity Scheduler**: Implementations of this interface will supply rounded resource values, influencing scheduling logic.
+	+ **Queue Capacity Vector**: Provides essential `QueueCapacityVectorEntry` objects utilized during the rounding process.
+
+**Implementation Note**
+-----------------------
+
+Concrete implementations of this interface should encapsulate the specific rounding strategy logic, ensuring seamless integration with the Capacity Scheduler and Queue Capacity Vector components within the YARN Resource Manager's Scheduling Layer.

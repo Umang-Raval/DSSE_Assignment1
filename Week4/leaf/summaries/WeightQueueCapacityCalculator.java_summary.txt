@@ -1,0 +1,39 @@
+Here is a merged, coherent, semantic file-level summary:
+
+**File Summary: Queue Capacity Calculator (YARN Resource Manager Scheduler)**
+
+**Overview**
+----------------
+
+This Java file implements the **Queue Capacity Calculator**, a critical component within the **YARN (Yet Another Resource Negotiator) Resource Manager Scheduler**. Specifically, it resides in the **Resource Allocation Logic Layer**, playing a key role in optimizing resource utilization across hierarchical queue structures.
+
+**Primary Functionality**
+-----------------------------
+
+* **Resource Prerequisite & Capacity Calculation**: Computes weighted capacity types for queues, supporting multiple resource types (e.g., CPU, Memory) in a hierarchical setup.
+* **Key Operations**:
+	1. **Precalculation of Children's Weights** (`calculateResourcePrerequisites`)
+	2. **Minimum Resource Allocation Computation** (`calculateMinimumResource`)
+	3. **Post-Calculation Capacity Updates** (`updateCapacitiesAfterCalculation`), incorporating weighted sums.
+
+**Interfaces & Data Exchange**
+-----------------------------------
+
+* **Inputs**:
+	+ `ResourceCalculationDriver` (queue hierarchy, resource configs, calculation context)
+	+ `CalculationContext` (minimum capacity entry, resource name, label)
+	+ `CSQueue` (configured capacities, node labels)
+* **Outputs**:
+	+ **Calculated Resource Values** (min/max, doubles)
+	+ **Updated Queue Capacities** (reflected in `CSQueue` objects)
+
+**Dependencies & Integrations**
+--------------------------------------
+
+* **Package Dependency**: `org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity`
+* **Parent Class**: `AbstractQueueCapacityCalculator`
+* **Interface Dependencies**: `ResourceCalculationDriver`, `CSQueue`
+* **Scheduler Ecosystem Interactions**:
+	+ Collaborates with `ResourceCalculationDriver` for queue/resource data.
+	+ Influences scheduling through updated `CSQueue` capacities.
+	+ Potential interactions with other capacity calculators in the broader scheduler framework.

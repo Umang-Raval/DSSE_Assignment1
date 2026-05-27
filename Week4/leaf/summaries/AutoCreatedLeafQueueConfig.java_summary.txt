@@ -1,0 +1,37 @@
+Here is a merged, coherent, semantic file-level summary:
+
+**File Summary: Auto-Created Leaf Queue Configuration Holder**
+
+**Overview**
+----------------
+
+This module serves as a **Configuration Holder** within a YARN Resource Manager's Capacity Scheduler, storing and providing access to auto-created leaf queue configurations. It manages template queue capacities, exposes configured and derived capacities, and ensures data integrity through immutable object construction.
+
+**Key Responsibilities**
+-----------------------------
+
+* **Configuration Management**: Handles auto queue creation policy by managing template queue capacities.
+* **Data Provisioning**: Exposes configured (`CapacitySchedulerConfiguration`) and derived (`QueueCapacities`, `QueueResourceQuotas`) capacities for informed scheduling decisions.
+
+**Design and Implementation Details**
+--------------------------------------
+
+* **Core Logic**: Encapsulates `QueueCapacities`, `CapacitySchedulerConfiguration`, and `QueueResourceQuotas` objects.
+* **Object Construction**: Employs the Builder pattern to ensure completeness and immutability of constructed objects.
+* **Interfaces**:
+	+ **Inputs** (via Builder):
+		- `QueueCapacities`
+		- `CapacitySchedulerConfiguration`
+		- `QueueResourceQuotas`
+	+ **Outputs**:
+		- Getters for `QueueCapacities`, `CapacitySchedulerConfiguration`, and `QueueResourceQuotas`
+		- `String` representation via `toString()`
+
+**Dependencies and Integrations**
+-----------------------------------
+
+* **Dependent Libraries**:
+	+ `org.apache.hadoop.yarn.server.resourcemanager.scheduler.QueueCapacities`
+	+ `org.apache.hadoop.yarn.server.resourcemanager.scheduler.CapacitySchedulerConfiguration`
+	+ `org.apache.hadoop.yarn.server.resourcemanager.scheduler.QueueResourceQuotas`
+* **Expected Usage**: Utilized by the **Auto Queue Creation Policy** component within the Capacity Scheduler to inform scheduling decisions.

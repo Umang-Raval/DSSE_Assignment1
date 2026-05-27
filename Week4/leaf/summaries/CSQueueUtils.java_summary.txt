@@ -1,0 +1,46 @@
+Here is a **coherent semantic file-level summary** merging the provided chunk summaries:
+
+**File Summary: `CapacitySchedulerUtils.java`**
+
+**Architectural Role:**
+Utility class for Hadoop YARN's Capacity Scheduler (CS), serving as a Queue Capacity Calculator/Updater within the Resource Management layer.
+
+**Key Functionality:**
+
+* Calculates absolute maximum capacities for queues based on parent queue capacities, node labels, and resource usage
+* Updates used capacity, reserved capacity, available resources, and statistics for queues
+* Handles both legacy and non-legacy queue modes for capacity calculations
+* Integrates with configuration settings for labeled and non-labeled queue capacities
+
+**Core Logic Highlights:**
+
+* `computeAbsoluteMaximumCapacity`: Calculates absolute maximum capacity using parent queue's capacity (considering legacy mode adjustments)
+* `updateUsedCapacity`: Updates used and reserved capacities based on resource usage and guaranteed resources
+* `updateQueueStatistics`: Refreshes queue statistics (used capacity, absolute used capacity, max available resources) for all or a specific node label partition
+
+**Inputs, Outputs, and Dependencies:**
+
+* **Inputs:**
+	+ Queue paths, capacities, maximum capacities, node labels, resource calculators, cluster resources, queue objects
+	+ Configuration settings (e.g., non-labeled queue capacity, labeled queue weight, legacy queue mode flag)
+	+ `parentQueueCapacities` and `nodeLabels` for absolute capacity calculations
+* **Outputs:**
+	+ Updated queue capacities, usage, and statistics
+	+ Calculated absolute maximum capacities and available resources
+* **Dependencies:**
+	+ `org.apache.hadoop.yarn.api.records.Resource`
+	+ `org.apache.hadoop.yarn.nodelabels.CommonNodeLabelsManager`
+	+ `org.apache.hadoop.yarn.server.resourcemanager.scheduler.ResourceUsage`
+	+ `org.apache.hadoop.yarn.util.resource.ResourceCalculator`
+	+ `org.apache.hadoop.yarn.server.utils.Lock`
+	+ `queueCapacities` and `parentQueueCapacities` objects (for capacity updates and calculations)
+
+**Interactions with Scheduler Components:**
+
+* **Explicit Interactions:**
+	+ Updates `AbstractCSQueue` instances (Queues)
+	+ Collaborates with `RMNodeLabelsManager` (Node Labels Manager) for resource retrieval by label
+	+ Utilizes `ResourceCalculator` for resource calculations
+	+ Loads settings from `CapacitySchedulerConfiguration` (Configuration)
+* **Implicit Dependencies:**
+	+ Likely interacts with the **Resource Scheduler** or **Queue Manager

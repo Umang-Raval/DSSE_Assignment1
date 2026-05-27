@@ -1,0 +1,50 @@
+Here is a merged, coherent, semantic file-level summary:
+
+**AutoCreatedQueueTemplate.java**
+=====================================
+
+**Overview**
+-----------
+
+This Java class, `AutoCreatedQueueTemplate`, serves as a **Template Settings Handler** within the **Capacity Scheduler Subsystem** (YARN Resource Manager). It manages template settings for auto-created queues, applying inherited configurations while prioritizing explicit settings over defaults.
+
+**Key Responsibilities**
+------------------------
+
+* Initialize template properties from `CapacitySchedulerConfiguration`
+* Apply parent template settings to child queues based on `QueuePath` hierarchies
+* Store configured templates with precedence handling, updating the `CapacitySchedulerConfiguration` accordingly
+
+**Input/Output Specifications**
+-----------------------------
+
+* **Inputs:**
+	+ `CapacitySchedulerConfiguration` object
+	+ `QueuePath` objects (parent and child queues)
+* **Outputs:**
+	+ Populated template property maps:
+		- `templateProperties`
+		- `leafOnlyProperties`
+		- `parentOnlyProperties`
+	+ Updated `CapacitySchedulerConfiguration` with applied template settings
+
+**Dependencies & Integrations**
+--------------------------------
+
+* Depends on:
+	+ `org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CapacitySchedulerConfiguration`
+	+ `org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.QueuePath`
+	+ `org.apache.hadoop.conf.ConfigurationProperties`
+* Interacts with Scheduler Components:
+	+ **Reads From:**
+			- `CapacitySchedulerConfiguration` (initial template settings)
+			- `QueuePath` hierarchies (determining inheritance)
+	+ **Writes To:**
+			- `CapacitySchedulerConfiguration` (applying templated settings to child queues)
+
+**Core Methods**
+----------------
+
+* `setTemplateConfigEntries`: Initializes template properties from configuration
+* `setTemplateEntriesForChild`: Applies parent template settings to child queues
+* `storeConfiguredTemplates`: Stores templated configuration entries with precedence handling

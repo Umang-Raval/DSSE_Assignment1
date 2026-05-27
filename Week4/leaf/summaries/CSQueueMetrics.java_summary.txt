@@ -1,0 +1,51 @@
+Here's a merged, coherent, semantic file-level summary:
+
+**File-Level Summary: `CSQueueMetrics` and Associated Capacity Management**
+
+**Architectural Role:**
+* **Components:** 
+	+ `CSQueueMetrics` (extends `QueueMetrics`)
+	+ `CapacityManager` (implicit, closely related to `CSQueueMetrics`)
+* **Subsystem:** YARN (Yet Another Resource Negotiator) - Resource Manager (RM)
+* **Layers:** 
+	+ Monitoring/Metrics (`CSQueueMetrics`)
+	+ Infrastructure/Platform (`CapacityManager`)
+
+**Unified Key Functionality:**
+* Comprehensive queue-level monitoring and capacity management within YARN's Resource Manager, encompassing:
+	1. **Resource Utilization Tracking**: Memory, CPU, and custom resources.
+	2. **Capacity Management**: Guaranteed, maximum, and used capacity percentages, with label-based (queue, user, application) settings.
+
+**Core Logic Highlights:**
+* Initialization and dynamic updates of metrics gauges and capacity settings based on input parameters (`Resource`, `partition`, `user`, `labels`, `capacity` values).
+* Registration of custom resource metrics.
+* Provision of getter methods for retrieving current metric and capacity values.
+
+**Consolidated Inputs and Outputs:**
+* **Inputs:**
+	+ `queueName`, `parent` queue, `enableUserMetrics`, `Configuration` (constructor)
+	+ `Resource` objects
+	+ `partition`, `user` strings
+	+ `capacity` and `absoluteCapacity` floats (for capacity updates)
+* **Outputs:**
+	+ Exposed metrics via getter methods (e.g., `getUsedCapacity()`, `getGuaranteedMB()`)
+	+ Current `maxCapacity` and `maxAbsoluteCapacity` values
+
+**Dependencies Overview:**
+* **Internal:**
+	+ `QueueMetrics`
+	+ `CSQueueMetricsForCustomResources`
+	+ `MetricsSystem`
+	+ `RMNodeLabelsManager` (for capacity management)
+* **External:**
+	+ `org.apache.hadoop` packages (YARN, Hadoop Common, etc.)
+	+ Standard Java libraries (`java.util`, `java.lang`)
+
+**Interactions with Scheduler Components:**
+* **Direct & Implicit:**
+	+ `Queue` (parent queue)
+	+ `ResourceManager` (through `MetricsSystem` and capacity enforcement)
+	+ **Resource Scheduler** (enforcing capacity constraints)
+* **Indirect Influence On:**
+	+ `Scheduler` (via queue hierarchy and resource management)
+	

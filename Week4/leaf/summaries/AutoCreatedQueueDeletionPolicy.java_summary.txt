@@ -1,0 +1,38 @@
+Here is a coherent, semantic file-level summary merging all the provided chunk summaries:
+
+**File-Level Summary: `AutoCreatedQueueDeletionPolicy.java`**
+
+**Overview**
+----------------
+
+This Java class, `AutoCreatedQueueDeletionPolicy`, is a component within the Resource Manager (RM) - Scheduler subsystem of the Apache Hadoop YARN framework. It is responsible for managing the automatic deletion of auto-created queues based on weight-based expiration criteria, integrating closely with the Capacity Scheduler for queue management.
+
+**Key Responsibilities**
+
+* Initializes dependencies (RM Context, Resource Calculator, Capacity Scheduler) and configures the monitoring interval.
+* Periodically identifies eligible auto-created queues for deletion and triggers their removal upon expiration.
+
+**Input/Output and Data Flow**
+
+* **Inputs**:
+	+ Configuration settings (e.g., `AUTO_CREATE_CHILD_QUEUE_EXPIRED_TIME`)
+	+ Queue metadata from the Capacity Scheduler
+* **Outputs**:
+	+ Deletion events for expired auto-created queues sent to the EventHandler
+
+**Dependencies and Integrations**
+
+* **Direct Dependencies**:
+	+ `RMContext` (Apache Hadoop YARN)
+	+ `ResourceScheduler` (specifically `CapacityScheduler`, Apache Hadoop YARN)
+	+ `ResourceCalculator` (Apache Hadoop YARN)
+* **Transitive Dependencies**: Various Hadoop YARN and utility classes (e.g., `Clock`, `LoggerFactory`)
+* **Scheduler Component Interactions**:
+	+ **CapacityScheduler**: Retrieves queue metadata, sends deletion events through the scheduler's event handler.
+	+ **ResourceCalculator**: Utilized for resource calculations.
+	+ **RMContext**: Provides access to the ResourceManager's dispatcher for event handling.
+
+**Operational Context**
+----------------------
+
+This policy operates within the Apache Hadoop YARN framework, specifically enhancing the lifecycle management of auto-created queues within the Capacity Scheduler, thereby contributing to efficient resource utilization and scheduler performance.

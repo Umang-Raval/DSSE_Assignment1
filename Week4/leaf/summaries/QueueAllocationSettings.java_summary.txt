@@ -1,0 +1,46 @@
+Here is a merged, coherent, semantic file-level summary:
+
+**File Summary: Queue Allocation Settings Calculator**
+
+**Overview**
+----------------
+
+This Java component, part of the YARN (Yet Another Resource Negotiator) Resource Manager's Scheduler (Capacity Scheduling), resides in the Business Logic/Policy Enforcement layer. It calculates and enforces minimum and maximum resource allocation settings for queues based on configured policies, queue properties, and cluster settings.
+
+**Key Responsibilities**
+-----------------------------
+
+* Initializes with a predefined minimum allocation resource
+* Computes maximum allocation resources by considering:
+	+ Cluster-wide maximum allocations
+	+ Queue-specific maximum allocations (with backward compatibility)
+	+ Ensuring queue maximums do not exceed cluster settings
+* Provides calculated minimum and maximum allocation resources to influence scheduling decisions
+
+**Interfaces and Data Exchange**
+--------------------------------------
+
+* **Inputs:**
+	+ Constructor: `minimumAllocation` (Resource)
+	+ `setupMaximumAllocation` method: 
+		- `configuration` (CapacitySchedulerConfiguration)
+		- `queuePath`
+		- `parent` (CSQueue)
+* **Outputs (Getters):**
+	+ `minimumAllocation` (Resource)
+	+ `maximumAllocation` (Resource), available after `setupMaximumAllocation` is invoked
+
+**Dependencies and Integrations**
+-----------------------------------------
+
+* Depends on:
+	+ `CapacitySchedulerConfiguration` for policy settings
+	+ `CSQueue` (parent queue) for hierarchical management
+* Influences:
+	+ Queue resource allocation limits, impacting YARN Resource Manager's scheduling logic
+* Utilizes:
+	+ `org.apache.hadoop.yarn.api.records.Resource`
+	+ `org.apache.hadoop.yarn.api.records.ResourceInformation`
+	+ `org.apache.hadoop.yarn.util.resource.ResourceUtils`
+	+ `org.apache.hadoop.yarn.util.resource.Resources`
+	+ `org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CapacitySchedulerConfiguration`

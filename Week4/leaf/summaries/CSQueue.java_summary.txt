@@ -1,0 +1,62 @@
+Here's a merged, coherent, semantic file-level summary:
+
+**File-Level Summary: CSQueue Manager/Controller (Hadoop YARN Capacity Scheduler)**
+
+**Architectural Role:**
+* **Component:** `CSQueue` (part of Capacity Scheduler in Hadoop YARN) / Queue Manager/Controller
+* **Layer:** Resource Management / Scheduling (Distributed Computing System)
+* **Responsibility:** Manages a hierarchical queue, handling resource allocation, application submission, container assignment, and access control within the Capacity Scheduler.
+
+**Key Functionality:**
+
+* **Primary Responsibilities:**
+	+ Application Submission and Management
+	+ Container Assignment and Management
+	+ Resource Allocation and Utilization Tracking
+	+ Queue Configuration and State Management
+* **Additional Capabilities:**
+	+ Preemption Settings Handling
+	+ Resource Updates and Effective Capacity Calculations
+	+ Access Control and Validation for Application Submissions
+
+**Core Logic:**
+
+* **Queue Hierarchy and Resource Management:**
+	+ Maintains parent-child queue relationships
+	+ Tracks used/available resources within the queue
+	+ Calculates effective queue capacity considering min/max resource configurations
+* **Lifecycle and State Management:**
+	+ Handles application and container lifecycles (submission, assignment, completion, detachment)
+	+ Updates queue resource usage based on node partitions and application activities
+* **Validation and Access Control:**
+	+ Checks access control for application submissions (`validateSubmitApplication`)
+
+**Inputs and Outputs:**
+
+* **Inputs:**
+	+ Application submissions
+	+ Container assignments/completions
+	+ Cluster resource updates
+	+ Queue configuration changes
+	+ Node partitions (`nodePartition`, `label`)
+	+ Resources (`resourceToInc`, `resourceToDec`, `clusterResource`)
+	+ Application information (`applicationId`, `userName`, `application`)
+	+ Configuration settings (capacity vectors, lifetimes)
+* **Outputs:**
+	+ Assigned containers
+	+ Updated queue state/resource utilization
+	+ Application/container lifecycle events
+	+ Queue capacities and resource usages
+	+ Validation results (AccessControlException)
+	+ Effective capacity calculations
+
+**Dependencies:**
+
+* **Hadoop YARN Components:**
+	+ `ResourceManager`
+	+ `NodeManager`
+	+ `ApplicationMaster`
+* **Other Dependencies:**
+	+ `org.apache.hadoop.yarn.api.records` (data structures like `ApplicationId`, `ContainerStatus`)
+	+ `org.apache.hadoop.security` (security and access control)
+	+ Java Concurrency Utilities (

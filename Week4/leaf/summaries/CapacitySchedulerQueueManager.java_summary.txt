@@ -1,0 +1,57 @@
+Below is a merged, coherent, semantic file-level summary of the provided Java source code chunks, emphasizing clarity and concision:
+
+**File-Level Summary: CapacitySchedulerQueueManager**
+
+### **Architectural Role**
+
+* **Component:** `CapacitySchedulerQueueManager`
+* **Subsystem:** Resource Manager (Apache Hadoop YARN)
+* **Layer:** Business Logic/Domain Model
+* **Responsibilities:**
+	+ Manages the lifecycle of queues within the Capacity Scheduler.
+	+ Ensures proper initialization, updates, and access control for queues.
+	+ Handles dynamic queue creation, removal, and hierarchy management.
+
+### **Key Functionality**
+
+* **Primary Functions:**
+	1. **Queue Lifecycle Management:** Initializes, reinitializes, and updates queues based on configurations.
+	2. **Access Control:** Provides secure access to queues (get, add, remove) with ACLs and permission enforcement.
+	3. **Hierarchy Management:** Maintains queue relationships and handles parent-child dependencies.
+* **Secondary Functions:**
+	1. **Queue Path Resolution**
+	2. **Normalization of Queue Names**
+	3. **Ambiguity Checks for Short Queue Names**
+	4. **Logging of Key Events**
+
+### **Core Logic Highlights**
+
+* **Initialization:**
+	- Parses queue configurations to create `CSQueue` objects.
+	- Establishes queue hierarchies and applies security settings (ACLs).
+* **Dynamic Operations:**
+	- `createAutoQueue` and `createLegacyAutoQueue` recursively create missing parent queues.
+	- `determineMissingParents` identifies required parent queues for auto-creation.
+* **Validation and Enforcement:**
+	- `isRemovable` decides whether a queue can be safely removed.
+	- `setQueueAcls` enforces security permissions on queues.
+
+### **Inputs and Outputs**
+
+* **Inputs:**
+	+ `CapacitySchedulerConfiguration` objects
+	+ `RMNodeLabelsManager` and `AppPriorityACLsManager` instances
+	+ `CapacitySchedulerContext`
+	+ `QueuePath` objects
+* **Outputs:**
+	+ `CSQueue` objects representing managed queues
+	+ Logging information for operational monitoring
+	+ Configured node labels and permission objects for access control
+
+### **Dependencies**
+
+* **Direct Dependencies:**
+	+ `org.apache.hadoop.yarn.server.resourcemanager.scheduler`
+	+ `org.apache.hadoop.yarn.server.resourcemanager.nodelabels`
+	+ `org.apache.hadoop.yarn.server.resourcemanager.security`
+	+ `

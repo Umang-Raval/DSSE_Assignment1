@@ -1,0 +1,40 @@
+Here is a merged, coherent, semantic file-level summary:
+
+**File Summary: `InMemoryConfigurationStore.java`**
+
+**Overview**
+----------------
+
+The `InMemoryConfigurationStore` component, part of the YARN (Yet Another Resource Negotiator) Resource Manager's Storage/Repository layer, manages in-memory storage of YARN configuration settings. It provides basic CRUD (Create, Read, Update, Delete) operations with versioning support, ensuring incremental updates to configuration settings.
+
+**Key Responsibilities**
+
+* **Storage Management**: Maintains in-memory YARN configuration settings.
+* **CRUD Operations**: Supports creation, reading, updating, and deletion of configurations.
+* **Version Control**: Automatically increments version numbers upon updates.
+
+**Primary Methods and Interactions**
+
+* **Initialization**: `initialize` sets the initial configuration and version using an `RMContext`.
+* **Update Handling**: `confirmMutation` applies updates from `LogMutation` objects, incrementing the version.
+* **Data Retrieval**: `retrieve` returns the current `Configuration` object and its corresponding version (`long` value).
+
+**Dependencies and Integrations**
+
+* **External Libraries**:
+	+ `org.apache.hadoop.conf.Configuration`
+	+ `org.apache.hadoop.yarn.server.records.Version`
+	+ `org.apache.hadoop.yarn.server.resourcemanager.RMContext`
+* **Implemented Interface**: `YarnConfigurationStore`
+* **Assumed Integrations**:
+	+ YARN Resource Manager (RM) for receiving configuration updates and providing settings for scheduling decisions.
+
+**Input/Output Summary**
+
+* **Inputs**:
+	- `Configuration` objects
+	- `LogMutation` objects
+	- `RMContext` object (during init)
+* **Outputs**:
+	- `Configuration` object (on retrieval)
+	- `long` values (representing config versions)

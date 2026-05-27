@@ -1,0 +1,43 @@
+Here is a **coherent semantic file-level summary** merging the provided chunk summaries:
+
+**File Summary: Workflow Priority Mappings Manager (Java Source Code)**
+
+**Overview**
+----------------
+
+This Java source code defines the **Workflow Priority Mappings Manager**, a critical component within the **Resource Manager Subsystem** of Apache Hadoop YARN. Its primary responsibility is managing workflow priority mappings for applications, seamlessly integrating with the **Capacity Scheduler**.
+
+**Key Responsibilities & Functionality**
+--------------------------------------
+
+* **Initialization**: Loads workflow priority mappings from configuration settings.
+* **Priority Mapping**:
+	+ Retrieves mapped priorities for workflows (applications) based on their IDs and queue hierarchies.
+	+ Applies overridden priorities to applications when configured to do so.
+* **Core Operations**:
+	+ `getWorkflowPriorityMappings()`: Builds queue-to-workflowID-to-priority mappings from configuration.
+	+ `getMappedPriority(...)`: Recursively searches queue hierarchies for matching workflow IDs to determine priorities.
+	+ `mapWorkflowPriorityForApp(...)`: Updates application submission contexts with mapped priorities (if override is enabled).
+
+**Interfaces & Data Exchange**
+-----------------------------
+
+* **Inputs**:
+	- `CapacityScheduler` instance
+	- Application details (`ApplicationId`, `CSQueue`, `user`, `Priority`)
+	- YARN configuration settings (e.g., `YARN_WORKFLOW_ID_TAG_PREFIX`)
+* **Outputs**:
+	- `Priority` objects (either mapped or original, based on override settings)
+	- Updated `RMApp` instances reflecting applied priority changes
+
+**Dependencies & Integrations**
+--------------------------------
+
+* **Dependent On**:
+	- `org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CapacityScheduler`
+	- `org.apache.hadoop.yarn.conf.YarnConfiguration`
+	- Various YARN API records (e.g., `ApplicationId`, `Priority`)
+	- `org.apache.hadoop.security.UserGroupInformation`
+* **Collaborates With**:
+	- **CapacityScheduler**: For configuration retrieval and application priority updates.
+	- **RMApp (Resource Manager Application)**: For updating application submission contexts with mapped priorities.

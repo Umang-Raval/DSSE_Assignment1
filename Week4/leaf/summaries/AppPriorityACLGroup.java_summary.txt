@@ -1,0 +1,40 @@
+Here is the merged, coherent, semantic file-level summary:
+
+**Scheduler Sub-Component: Priority-Based Scheduling with Access Control**
+
+**Overview**
+----------------
+
+This component, part of the **Hadoop YARN (Yet Another Resource Negotiator)** system within the **Resource Management Layer**, manages access control and priority-based scheduling for applications.
+
+**Key Responsibilities**
+-------------------------
+
+* **Access Control**: Manages Access Control Lists (ACLs) on a per-application priority basis.
+* **Priority-Based Scheduling**: Enables scheduling based on application priorities while enforcing security constraints.
+
+**Internal Mechanics**
+----------------------
+
+* **Core Logic**:
+	+ Compares and stores `maxPriority` and `defaultPriority` for ordered scheduling.
+	+ Associates an `AccessControlList` with each priority setting for secure access management.
+* **Data Exchange**:
+	+ **Inputs**:
+		- `maxPriority` (Priority object)
+		- `defaultPriority` (Priority object)
+		- `aclList` (AccessControlList object)
+	+ **Outputs**:
+		- Compared priority values (`compareTo` method)
+		- Retrieved priority and ACL settings (getter methods)
+
+**Dependencies & Integrations**
+---------------------------------
+
+* **Dependent Libraries**:
+	+ `org.apache.hadoop.security.authorize.AccessControlList`
+	+ `org.apache.hadoop.yarn.api.records.Priority`
+* **Inter-component Interactions**:
+	+ **Scheduler**: Utilizes `AppPriorityACLGroup` instances for prioritized task scheduling.
+	+ **Resource Allocator**: Influences resource allocation based on priority and ACL settings.
+	+ **Application Master**: Exchanges feedback on priority adjustments and ACL enforcement.

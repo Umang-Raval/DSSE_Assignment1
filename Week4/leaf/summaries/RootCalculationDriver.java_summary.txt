@@ -1,0 +1,49 @@
+Here is a coherent, semantic, file-level summary merging all the provided chunk summaries:
+
+**File-Level Summary: `RootCalculationDriver.java`**
+
+**Overview**
+----------------
+
+The `RootCalculationDriver` component, situated within the Resource Calculation/Allocation layer of the YARN (Yet Another Resource Negotiator) Resource Manager Scheduler subsystem, orchestrates resource calculations and allocations for the root queue in a YARN cluster.
+
+**Primary Responsibilities**
+-----------------------------
+
+* Drives resource calculations for the root queue, iterating through node labels and capacity vectors.
+* Determines minimum and maximum resource allocations for each configured node label and resource, utilizing an injected `AbstractQueueCapacityCalculator`.
+* Applies a rounding strategy to derive rounded resource values.
+* Updates `QueueResourceQuotas` with effective min/max resources and triggers post-calculation capacity updates via the `rootCalculator`.
+
+**Input/Output Specifications**
+--------------------------------
+
+* **Inputs:**
+	+ `CSQueue` (managed root queue)
+	+ `QueueCapacityUpdateContext` (provided by YARN Resource Manager)
+	+ `AbstractQueueCapacityCalculator` (injected root calculator)
+	+ `Collection<String>` (defined resources)
+	+ Node labels and capacity vectors (from queue configuration)
+* **Outputs:**
+	+ Updated `QueueResourceQuotas` with calculated min/max resources
+	+ Triggered capacity updates (impacting scheduler's capacity management)
+
+**Dependency Landscape**
+-------------------------
+
+* **Injected Dependencies:**
+	+ `AbstractQueueCapacityCalculator`
+	+ `roundingStrategy`
+* **Assumed Managed Dependencies:**
+	+ `CSQueue` (by YARN Resource Manager)
+	+ `QueueCapacityUpdateContext` (by YARN Resource Manager)
+
+**Scheduler Component Interactions**
+--------------------------------------
+
+* **Dependent On:**
+	+ `AbstractQueueCapacityCalculator` for resource calculations
+	+ YARN Resource Manager for queue management and context provision
+* **Influences:**
+	+ Scheduler's allocation logic (via updated `QueueResourceQuotas`)
+	+ Scheduler's capacity management (via triggered capacity updates)

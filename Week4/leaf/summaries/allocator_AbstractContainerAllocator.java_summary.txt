@@ -1,0 +1,36 @@
+Here is a coherent, semantic file-level summary merging the provided chunk summaries:
+
+**File Summary: `AbstractContainerAllocator.java`**
+
+**Overview**
+----------------
+
+This abstract class, `AbstractContainerAllocator`, resides within the **Resource Management Layer** of the **YARN (Yet Another Resource Negotiator) Resource Manager Subsystem**. It provides extensible logic for dynamically allocating containers to applications based on resource requests, limits, and cluster availability.
+
+**Key Responsibilities**
+-----------------------------
+
+* Maps allocation results to `CSAssignment` objects, handling various allocation states (e.g., allocated, reserved, skipped) and updating relevant metrics.
+* Defines an abstract framework for selecting requests, checking resource availability, and performing container allocations, to be concretized by subclasses.
+
+**Input/Output Specifications**
+-----------------------------------
+
+* **Inputs:**
+	- `clusterResource`: Cluster's available resources
+	- `candidates`: Set of candidate nodes for allocation
+	- `schedulingMode`: Exclusive or non-exclusive scheduling mode
+	- `resourceLimits`: Constraints on resource allocation
+	- `reservedContainer`: Optional reserved container for allocation
+* **Outputs:**
+	- `CSAssignment`: Container allocation proposal, including allocation details and metrics updates
+
+**Dependencies & Integrations**
+--------------------------------------
+
+* Relies on `org.apache.hadoop.yarn` packages (e.g., `api`, `server`, `util`) and `org.slf4j` for logging.
+* Collaborates with:
+	1. **Application Scheduling Info (`AppSchedulingInfo`)**: For application-specific scheduling details.
+	2. **Activities Manager (`ActivitiesManager`)**: To update activity logs and metrics.
+	3. **Resource Calculator (`ResourceCalculator`)**: For resource comparisons and arithmetic.
+	4. **Candidate Node Sets (`CandidateNodeSet`)**: To evaluate suitable nodes for container allocation.

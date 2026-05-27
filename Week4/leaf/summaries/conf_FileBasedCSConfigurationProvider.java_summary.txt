@@ -1,0 +1,26 @@
+Here is a merged, coherent, semantic file-level summary:
+
+**File Summary: Capacity Scheduler Configuration Provider**
+
+**Overview**
+This Java class serves as a **Configuration Provider** within the **Resource Manager (RM) Subsystem**, specifically designed for the **Capacity Scheduler (CS)**, built atop the **Apache Hadoop YARN Framework**.
+
+**Primary Function**
+Loads and provides **Capacity Scheduler configuration** from a local `capacity-scheduler.xml` file to the **Capacity Scheduler**, enabling its operation within the YARN ecosystem.
+
+**Technical Details**
+
+* **Initialization**: Requires an `RMContext` instance upon construction.
+* **Operation**:
+	1. Retrieves the `capacity-scheduler.xml` input stream from the provided `RMContext`.
+	2. If the input stream is available, adds the configuration resource to a supplied `Configuration` object.
+	3. Returns a populated `CapacitySchedulerConfiguration` instance based on the loaded configuration.
+* **Interfaces and Dependencies**:
+	+ Inputs: `RMContext`, `Configuration`
+	+ Output: `CapacitySchedulerConfiguration`
+	+ Depends on:
+		- `org.apache.hadoop.conf.Configuration`
+		- `org.apache.hadoop.yarn.conf.YarnConfiguration`
+		- `org.apache.hadoop.yarn.server.resourcemanager.RMContext`
+		- `org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CapacitySchedulerConfiguration`
+* **System Interaction**: Indirectly supports the **Capacity Scheduler** by providing essential configuration via the `loadConfiguration` method, facilitating the scheduler's functionality within the YARN Resource Manager.

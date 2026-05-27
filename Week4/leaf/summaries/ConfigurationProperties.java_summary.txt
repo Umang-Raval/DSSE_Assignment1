@@ -1,0 +1,34 @@
+Here is a merged, coherent, semantic file-level summary:
+
+**File Summary: Configuration Store for YARN Resource Manager Scheduler**
+
+**Overview**
+This Java module serves as the **Configuration Store** component within the **Resource Manager Scheduler (YARN)** subsystem, optimizing the storage and retrieval of configuration properties.
+
+**Key Features and Behavior**
+
+* Employs a **trie data structure** for efficient storage and retrieval of configuration properties.
+* Supports **property filtering by prefix**, with optional key trimming, enabling targeted access to configuration settings.
+* Core operations include:
+	+ **Recursive Storage**: `storePropertiesInPrefixNodes` method efficiently stores properties in the trie-based node structure.
+	+ **Prefixed Retrieval**: `getPropertiesWithPrefix` method traverses the trie to collect properties matching a specified prefix.
+
+**Interface and Data Exchange**
+
+* **Inputs**:
+	- `Map<String, String>`: Configuration properties passed via the constructor.
+	- `String`: Prefix for filtering, accepted by `getPropertiesWithPrefix` methods.
+* **Outputs**:
+	- `Map<String, String>`: Filtered properties returned by `getPropertiesWithPrefix` methods.
+
+**Dependencies and Integrations**
+
+* **External Libraries**:
+	- `org.slf4j` for logging capabilities.
+	- `java.util` for utilizing collections and iterators.
+* **Internal Dependencies**:
+	- `CapacitySchedulerConfiguration` for constant `DOT`.
+* **Subsystem Interactions**:
+	- Collaborates with **`CapacityScheduler`** to enhance access to configuration properties, potentially influencing scheduling decisions through queued, filtered property retrievals (e.g., queue-specific configurations).
+
+**Semantic Tags**: Configuration Store, YARN, Resource Manager Scheduler, Trie Data Structure, Property Filtering, Prefixed Retrieval, Efficient Storage.

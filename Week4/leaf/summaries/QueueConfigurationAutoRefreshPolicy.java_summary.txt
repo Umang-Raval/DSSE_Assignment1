@@ -1,0 +1,42 @@
+Here is a coherent, semantic, file-level summary merging all the provided chunk summaries:
+
+**QueueConfigurationAutoRefreshPolicy.java**
+
+**Overview**
+----------------
+
+This Java class, `QueueConfigurationAutoRefreshPolicy`, operates within the Resource Manager's (RM) Capacity Scheduler subsystem. Its primary function is to periodically monitor queue configuration files for changes and trigger automatic refreshes of queues as needed, ensuring the system remains up-to-date.
+
+**Key Responsibilities**
+-------------------------
+
+* **Periodic Monitoring**: Regularly checks for modifications to queue configuration files.
+* **Automatic Refresh**: Triggers queue refresh upon detecting changes or at predefined scheduled intervals.
+* **Error Handling & Logging**: Manages errors and logs events at INFO, ERROR, and DEBUG levels during the refresh process.
+
+**Core Implementation Details**
+---------------------------------
+
+* The `editSchedule()` method drives the core logic:
+	1. Verifies if the queue configuration file has been modified since the last reload attempt.
+	2. Initiates a queue refresh via `RMAdminService` if the file has changed and the monitoring interval has elapsed.
+	3. Updates internal state (last reload attempt, failure flags) based on the refresh outcome.
+
+**Dependencies & Interactions**
+-------------------------------
+
+* **Initialization Input**:
+	+ `Configuration` object
+* **Runtime Inputs**:
+	+ `RMContext`
+	+ `ResourceScheduler` (CapacityScheduler)
+	+ Filesystem access
+* **Outputs**:
+	+ Logging messages (INFO, ERROR, DEBUG)
+	+ Updated queue configurations (on successful refresh)
+* **Dependencies**:
+	+ Direct: `org.apache.hadoop` packages, `org.slf4j` for logging
+	+ Indirect: Various Hadoop ecosystem components (YARN, HDFS)
+* **Scheduler Component Interactions**:
+	+ Primary: `CapacityScheduler` (scheduling context, resource calculator), `RMAdminService` (queue refresh)
+	+ Secondary: `RMContext` (node label manager, YARN configuration), `ResourceCalculator` (used within CapacityScheduler)
