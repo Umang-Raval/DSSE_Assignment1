@@ -37,7 +37,7 @@ model_name = "ByteDance-Seed/Seed-Coder-8B-Instruct"
 
 bnb_config = BitsAndBytesConfig(
     load_in_4bit=True, # What is loaded in 4 bit? why?
-    bnb_4bit_compute_dtype=torch.float16,
+    bnb_4bit_compute_dtype=torch.bfloat16,
     bnb_4bit_use_double_quant=True,
     bnb_4bit_quant_type="nf4"
 )
@@ -59,7 +59,8 @@ model = AutoModelForCausalLM.from_pretrained(
     token=hf_token,
     trust_remote_code=True, # Does your model need it?
     quantization_config=bnb_config, # from section 2 above
-    torch_dtype=torch.float16
+    torch_dtype=torch.float16,
+    device_map="auto"
 )
 
 """# 4. INFERENCE & HYPERPARAMETER TUNING
@@ -74,7 +75,18 @@ prompt = [
     },
     {
         "role": "user",
-        "content": """Please analyze the following source code:
+        "content": """Please analyze the following Java source code.
+
+Provide:
+
+1. A brief summary of the program.
+2. Step-by-step explanation.
+3. Explanation of all variables.
+4. Explanation of the output.
+5. Time complexity.
+6. Potential improvements.
+
+Use simple language suitable for a beginner programmer.
 
         <source_code>
         public class Task {
@@ -118,11 +130,13 @@ inputs = tokenizer.apply_chat_template(
 print("Generating response...\n")
 outputs = model.generate(
     **inputs,
-    max_new_tokens=512, # which tokens?
-    temperature=0.5, # ?
-    top_p=0.8, # ?
+    max_new_tokens=350, # which tokens?
+    temperature=0.3, # ?
+    top_p=0.9, # ?
+    repetition_penalty=1.1,
     do_sample=True, # What if this toggle is false?
-    pad_token_id=tokenizer.eos_token_id
+    pad_token_id=tokenizer.eos_token_id,
+    eos_token_id=tokenizer.eos_token_id
 )
 
 """**Convert the output back from tokens into human-readable text and display it**"""
