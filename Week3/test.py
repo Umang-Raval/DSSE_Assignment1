@@ -1,7 +1,7 @@
 import json
 
-input_file = "Week3_Group5_nomic_ai_CodeRankEmbed.ipynb"
-output_file = "Week3_Group5_nomic_ai_CodeRankEmbed_clean.ipynb"
+input_file = "Week3_Group5_jinai.ipynb"
+output_file = "Week3_Group5_jinai_clean.ipynb"
 
 with open(input_file, "r", encoding="utf-8") as f:
     nb = json.load(f)
