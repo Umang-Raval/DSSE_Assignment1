@@ -176,7 +176,7 @@ with open(RSF_PATH, "r") as f:
 print(f"Structural matrix shape: {struct_matrix_raw.shape}")
 print(f"Non-zero entries: {np.count_nonzero(struct_matrix_raw)}")
 np.save("/content/output/struct_matrix_raw.npy", struct_matrix_raw)
-print("✅ Structural matrix saved.")
+print(" Structural matrix saved.")
 
 """**7. Normalize the structural matrix**"""
 
@@ -201,7 +201,7 @@ np.fill_diagonal(distance_matrix, 0)
 print(f"Combined similarity range: {combined_similarity.min():.3f} – {combined_similarity.max():.3f}")
 print(f"Distance matrix range: {distance_matrix.min():.3f} – {distance_matrix.max():.3f}")
 np.save("/content/output/distance_matrix.npy", distance_matrix)
-print("✅ Distance matrix saved.")
+print(" Distance matrix saved.")
 
 """**9. Apply clustering**"""
 
@@ -242,8 +242,8 @@ with open(rsf_output_path, "w") as f:
             f"contain cluster{cluster_id} {class_name}\n"
         )
 
-print(f"✅ Clustering done!")
-print(f"✅ RSF saved to: {rsf_output_path}")
+print(f" Clustering done!")
+print(f" RSF saved to: {rsf_output_path}")
 
 """**10. Visulizations**"""
 
@@ -280,4 +280,4 @@ plt.tight_layout()
 plt.savefig("/content/output/similarity_heatmap.png", dpi=150)
 plt.show()
 
-print("✅ All visualizations saved to /content/output/")
+print(" All visualizations saved to /content/output/")
