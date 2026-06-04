@@ -1,0 +1,120 @@
+contain 0 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.AbsoluteResourceCapacityCalculator
+contain 0 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.QueueCapacities
+contain 0 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.ResourceCalculationDriver
+contain 0 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.UserInfo
+contain 0 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.UserWeights
+contain 0 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.UsersManager
+contain 0 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.WeightQueueCapacityCalculator
+
+contain 1 GuaranteedOrZeroCapacityOverTimePolicy
+contain 1 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.AbstractManagedParentQueue
+contain 1 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.AutoCreatedLeafQueueConfig
+contain 1 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.AutoCreatedQueueManagementPolicy
+contain 1 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.AutoCreatedQueueTemplate
+contain 1 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CapacitySchedulerQueueManager
+contain 1 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.LeafQueue
+contain 1 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.ManagedParentQueue
+contain 1 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.ParentQueue
+contain 1 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.PlanQueue
+contain 1 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.QueueManagementChange
+contain 1 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.QueuePath
+contain 1 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.QueuePrefixes
+contain 1 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.QueueStateHelper
+contain 1 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.ReservationQueue
+contain 1 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.conf.ConfigurationUpdateAssembler
+contain 1 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.conf.QueueAdminConfigurationMutationACLPolicy
+contain 1 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.queuemanagement.DeactivatedLeafQueuesByLabel
+contain 1 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.queuemanagement.LeafQueueEntitlements
+
+contain 2 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CapacitySchedulerMetrics
+contain 2 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.conf.YarnConfStoreVersionIncompatibleException
+contain 2 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.conf.YarnConfigurationStoreFactory
+contain 2 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.conf.package-info
+
+contain 3 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.conf.FSSchedulerConfigurationStore
+contain 3 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.conf.InMemoryConfigurationStore
+contain 3 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.conf.LeveldbConfigurationStore
+contain 3 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.conf.MutableCSConfigurationProvider
+contain 3 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.conf.YarnConfigurationStore
+contain 3 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.conf.ZKConfigurationStore
+
+contain 4 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.AppPriorityACLConfigurationParser
+contain 4 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.AppPriorityACLGroup
+
+contain 5 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.AbstractQueueCapacityCalculator
+contain 5 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CSAMContainerLaunchDiagnosticsConstants
+contain 5 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CSQueueUsageTracker
+contain 5 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CalculationContext
+contain 5 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CapacityHeadroomProvider
+contain 5 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CapacitySchedulerContext
+contain 5 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CapacitySchedulerQueueContext
+contain 5 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.DefaultQueueResourceRoundingStrategy
+contain 5 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.PercentageQueueCapacityCalculator
+contain 5 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.QueueAllocationSettings
+contain 5 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.QueueCapacityUpdateContext
+contain 5 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.QueueResourceRoundingStrategy
+contain 5 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.QueueUpdateWarning
+contain 5 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.RootCalculationDriver
+contain 5 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.RootQueueCapacityCalculator
+contain 5 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.SchedulingMode
+contain 5 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.conf.CSConfigurationProvider
+contain 5 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.conf.FileBasedCSConfigurationProvider
+
+contain 6 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CSAssignment
+contain 6 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.allocator.AbstractContainerAllocator
+contain 6 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.allocator.AllocationState
+contain 6 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.allocator.ContainerAllocation
+contain 6 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.allocator.ContainerAllocator
+contain 6 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.allocator.RegularContainerAllocator
+
+contain 7 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.ConfiguredNodeLabels
+contain 7 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.QueueNodeLabelsSettings
+contain 7 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.policy.PriorityUtilizationQueueOrderingPolicy
+contain 7 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.policy.QueueOrderingPolicy
+
+contain 8 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CSMaxRunningAppsEnforcer
+contain 8 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.QueueAppLifetimeAndLimitSettings
+
+contain 9 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.ConfigurationProperties
+
+contain 10 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.conf.QueueCapacityConfigParser
+
+contain 11 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.preemption.KillableContainer
+contain 11 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.preemption.PreemptableQueue
+contain 11 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.preemption.PreemptionManager
+
+contain 12 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.placement.MappingRuleCreator
+contain 12 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.placement.converter.LegacyMappingRuleToJson
+contain 12 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.placement.schema.Rule
+
+contain 13 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.WorkflowPriorityMappingsManager
+
+contain 14 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.AbstractAutoCreatedLeafQueue
+contain 14 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.AbstractCSQueue
+contain 14 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.AbstractLeafQueue
+contain 14 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.AbstractParentQueue
+contain 14 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.AutoCreatedLeafQueue
+contain 14 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.AutoCreatedQueueDeletionPolicy
+contain 14 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CSQueue
+contain 14 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CSQueueInfoProvider
+contain 14 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CSQueueMetrics
+contain 14 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CSQueueUtils
+contain 14 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CapacityScheduler
+contain 14 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CapacitySchedulerConfigValidator
+contain 14 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CapacitySchedulerConfiguration
+contain 14 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CapacitySchedulerQueueCapacityHandler
+contain 14 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.QueueConfigurationAutoRefreshPolicy
+contain 14 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.QueueManagementDynamicEditPolicy
+
+contain 15 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.QueueCapacityVector
+contain 15 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.ResourceVector
+
+contain 16 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.placement.package-info
+contain 16 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.queuemanagement.package-info
+
+contain 17 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CSQueuePreemptionSettings
+
+contain 18 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.placement.GeneratePojos
+contain 18 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.placement.schema.MappingRulesDescription
+
+contain 19 org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CSQueueStore
