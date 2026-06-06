@@ -1,0 +1,697 @@
+cpu-bind=MASK - n2gpu1216, task  0  0 [3350513]: mask 0x|--------|--------||BBBBBBBB|BBBBBBBB||--------|--------||--------|--------||||--------|--------||--------|--------||--------|--------||--------|--------| set
+The following modules were not unloaded:
+  (Use "module --force purge" to unload all):
+
+  1) pc2fs   2) slurm/25.11.2-1   3) DefaultModules
+Starting Hierarchical Summarization 70B job...Week4...
+Started: Fri Jun  5 11:19:04 CEST 2026
+Running hierarchical summarization...
+Output dir: /scratch/hpc-prf-dssecs/group5/pawanw4/week4_outputs_full
+  SOURCE_ROOT: OK
+  CAPACITY_DIR: OK
+HF_TOKEN loaded.
+Loading nvidia/Llama-3.1-Nemotron-70B-Instruct-HF...
+Loading weights:   0%|          | 2/723 [00:09<53:12,  4.43s/it]  /scratch/hpc-prf-dssecs/group5/llm/lib/python3.10/site-packages/bitsandbytes/backends/cuda/ops.py:213: FutureWarning: _check_is_size will be removed in a future PyTorch release along with guard_size_oblivious.     Use _check(i >= 0) instead.
+  torch._check_is_size(blocksize)
+Loading weights: 100%|██████████| 723/723 [04:55<00:00,  2.45it/s]
+Model loaded!
+Cell 4 complete.
+Parsing ARC RSF...
+  Format detected: LIMBO
+  Clusters: ['Cluster_0', 'Cluster_1', 'Cluster_2', 'Cluster_3', 'Cluster_4', 'Cluster_5', 'Cluster_6', 'Cluster_7', 'Cluster_8', 'Cluster_9']
+  199 mappings.
+Building cluster->files map...
+  Matched 101/101 files to clusters.
+  Cluster_0: 10 files
+  Cluster_1: 15 files
+  Cluster_2: 20 files
+  Cluster_3: 19 files
+  Cluster_4: 5 files
+  Cluster_5: 3 files
+  Cluster_6: 6 files
+  Cluster_7: 6 files
+  Cluster_8: 11 files
+  Cluster_9: 6 files
+
+Level 1: Leaf summarisation (longest step)...
+  [1/101] Cluster_0 -> AbsoluteResourceCapacityCalculator.java
+/scratch/hpc-prf-dssecs/group5/llm/lib/python3.10/site-packages/bitsandbytes/backends/cuda/ops.py:468: FutureWarning: _check_is_size will be removed in a future PyTorch release along with guard_size_oblivious.     Use _check(i >= 0) instead.
+  torch._check_is_size(blocksize)
+[transformers] Ignoring clean_up_tokenization_spaces=True for BPE tokenizer TokenizersBackend. The clean_up_tokenization post-processing step is designed for WordPiece tokenizers and is destructive for BPE (it strips spaces before punctuation). Set clean_up_tokenization_spaces=False to suppress this warning, or set clean_up_tokenization_spaces_for_bpe_even_though_it_will_corrupt_output=True to force cleanup anyway.
+  [2/101] Cluster_0 -> AutoCreatedQueueDeletionPolicy.java
+  [3/101] Cluster_0 -> CSQueueInfoProvider.java
+  [4/101] Cluster_0 -> CSQueueMetrics.java
+  [5/101] Cluster_0 -> CapacitySchedulerMetrics.java
+  [6/101] Cluster_0 -> QueueConfigurationAutoRefreshPolicy.java
+  [7/101] Cluster_0 -> QueueManagementDynamicEditPolicy.java
+  [8/101] Cluster_0 -> ResourceCalculationDriver.java
+  [9/101] Cluster_0 -> UsersManager.java
+  [10/101] Cluster_0 -> WeightQueueCapacityCalculator.java
+  [11/101] Cluster_1 -> AutoCreatedLeafQueueConfig.java
+  [12/101] Cluster_1 -> AutoCreatedQueueManagementPolicy.java
+  [13/101] Cluster_1 -> CSQueuePreemptionSettings.java
+  [14/101] Cluster_1 -> ConfiguredNodeLabels.java
+  [15/101] Cluster_1 -> LeafQueue.java
+  [16/101] Cluster_1 -> QueueManagementChange.java
+  [17/101] Cluster_1 -> QueueNodeLabelsSettings.java
+  [18/101] Cluster_1 -> QueuePrefixes.java
+  [19/101] Cluster_1 -> QueueStateHelper.java
+  [20/101] Cluster_1 -> PriorityUtilizationQueueOrderingPolicy.java
+  [21/101] Cluster_1 -> QueueOrderingPolicy.java
+  [22/101] Cluster_1 -> KillableContainer.java
+  [23/101] Cluster_1 -> PreemptableQueue.java
+  [24/101] Cluster_1 -> PreemptionManager.java
+  [25/101] Cluster_1 -> LeafQueueEntitlements.java
+  [26/101] Cluster_2 -> AbstractAutoCreatedLeafQueue.java
+  [27/101] Cluster_2 -> AbstractCSQueue.java
+  [28/101] Cluster_2 -> AbstractLeafQueue.java
+  [29/101] Cluster_2 -> AbstractManagedParentQueue.java
+  [30/101] Cluster_2 -> AbstractParentQueue.java
+  [31/101] Cluster_2 -> AutoCreatedLeafQueue.java
+  [32/101] Cluster_2 -> CSMaxRunningAppsEnforcer.java
+  [33/101] Cluster_2 -> CSQueue.java
+  [34/101] Cluster_2 -> CSQueueUtils.java
+  [35/101] Cluster_2 -> CapacityScheduler.java
+  [36/101] Cluster_2 -> CapacitySchedulerConfigValidator.java
+  [37/101] Cluster_2 -> CapacitySchedulerQueueCapacityHandler.java
+  [38/101] Cluster_2 -> CapacitySchedulerQueueManager.java
+  [39/101] Cluster_2 -> ManagedParentQueue.java
+  [40/101] Cluster_2 -> ParentQueue.java
+  [41/101] Cluster_2 -> PlanQueue.java
+  [42/101] Cluster_2 -> QueueAppLifetimeAndLimitSettings.java
+  [43/101] Cluster_2 -> ReservationQueue.java
+  [44/101] Cluster_2 -> DeactivatedLeafQueuesByLabel.java
+  [45/101] Cluster_2 -> GuaranteedOrZeroCapacityOverTimePolicy.java
+  [46/101] Cluster_3 -> CSAMContainerLaunchDiagnosticsConstants.java
+  [47/101] Cluster_3 -> CSQueueUsageTracker.java
+  [48/101] Cluster_3 -> CapacityHeadroomProvider.java
+  [49/101] Cluster_3 -> CapacitySchedulerContext.java
+  [50/101] Cluster_3 -> CapacitySchedulerQueueContext.java
+  [51/101] Cluster_3 -> ConfigurationProperties.java
+  [52/101] Cluster_3 -> QueueAllocationSettings.java
+  [53/101] Cluster_3 -> QueueCapacityUpdateContext.java
+  [54/101] Cluster_3 -> QueueUpdateWarning.java
+  [55/101] Cluster_3 -> SchedulingMode.java
+  [56/101] Cluster_3 -> UserInfo.java
+  [57/101] Cluster_3 -> UserWeights.java
+  [58/101] Cluster_3 -> CSConfigurationProvider.java
+  [59/101] Cluster_3 -> FileBasedCSConfigurationProvider.java
+  [60/101] Cluster_3 -> YarnConfStoreVersionIncompatibleException.java
+  [61/101] Cluster_3 -> YarnConfigurationStoreFactory.java
+  [62/101] Cluster_3 -> package-info.java
+  [65/101] Cluster_4 -> GeneratePojos.java
+  [66/101] Cluster_4 -> MappingRuleCreator.java
+  [67/101] Cluster_4 -> LegacyMappingRuleToJson.java
+  [68/101] Cluster_4 -> MappingRulesDescription.java
+  [69/101] Cluster_4 -> Rule.java
+  [70/101] Cluster_5 -> AppPriorityACLConfigurationParser.java
+  [71/101] Cluster_5 -> AppPriorityACLGroup.java
+  [72/101] Cluster_5 -> WorkflowPriorityMappingsManager.java
+  [73/101] Cluster_6 -> CSAssignment.java
+  [74/101] Cluster_6 -> AbstractContainerAllocator.java
+  [75/101] Cluster_6 -> AllocationState.java
+  [76/101] Cluster_6 -> ContainerAllocation.java
+  [77/101] Cluster_6 -> ContainerAllocator.java
+  [78/101] Cluster_6 -> RegularContainerAllocator.java
+  [79/101] Cluster_7 -> FSSchedulerConfigurationStore.java
+  [80/101] Cluster_7 -> InMemoryConfigurationStore.java
+  [81/101] Cluster_7 -> LeveldbConfigurationStore.java
+  [82/101] Cluster_7 -> MutableCSConfigurationProvider.java
+  [83/101] Cluster_7 -> YarnConfigurationStore.java
+  [84/101] Cluster_7 -> ZKConfigurationStore.java
+  [85/101] Cluster_8 -> AbstractQueueCapacityCalculator.java
+  [86/101] Cluster_8 -> CalculationContext.java
+  [87/101] Cluster_8 -> DefaultQueueResourceRoundingStrategy.java
+  [88/101] Cluster_8 -> PercentageQueueCapacityCalculator.java
+  [89/101] Cluster_8 -> QueueCapacities.java
+  [90/101] Cluster_8 -> QueueCapacityVector.java
+  [91/101] Cluster_8 -> QueueResourceRoundingStrategy.java
+  [92/101] Cluster_8 -> ResourceVector.java
+  [93/101] Cluster_8 -> RootCalculationDriver.java
+  [94/101] Cluster_8 -> RootQueueCapacityCalculator.java
+  [95/101] Cluster_8 -> QueueCapacityConfigParser.java
+  [96/101] Cluster_9 -> AutoCreatedQueueTemplate.java
+  [97/101] Cluster_9 -> CSQueueStore.java
+  [98/101] Cluster_9 -> CapacitySchedulerConfiguration.java
+  [99/101] Cluster_9 -> QueuePath.java
+  [100/101] Cluster_9 -> ConfigurationUpdateAssembler.java
+  [101/101] Cluster_9 -> QueueAdminConfigurationMutationACLPolicy.java
+Level 1 complete -> /scratch/hpc-prf-dssecs/group5/pawanw4/week4_outputs_full/file_summaries_ARC.json
+Level 2: Subdirectory summarisation...
+
+Subdir processing for Cluster_0...
+
+Subdir processing for Cluster_1...
+  Summarising policy/ (2 files)...
+  Summarising preemption/ (3 files)...
+  Summarising queuemanagement/ (1 files)...
+
+Subdir processing for Cluster_2...
+  Summarising queuemanagement/ (2 files)...
+
+Subdir processing for Cluster_3...
+  Summarising conf/ (5 files)...
+  Summarising placement/ (1 files)...
+  Summarising queuemanagement/ (1 files)...
+
+Subdir processing for Cluster_4...
+  Summarising placement/ (5 files)...
+
+Subdir processing for Cluster_5...
+
+Subdir processing for Cluster_6...
+  Summarising allocator/ (5 files)...
+
+Subdir processing for Cluster_7...
+  Summarising conf/ (6 files)...
+
+Subdir processing for Cluster_8...
+  Summarising conf/ (1 files)...
+
+Subdir processing for Cluster_9...
+  Summarising conf/ (2 files)...
+
+Level 2 complete -> /scratch/hpc-prf-dssecs/group5/pawanw4/week4_outputs_full/subdir_summaries_ARC.json
+Level 3: Cluster-level summarisation...
+
+[1/10] Cluster summary: Cluster_0
+  Preview: TITLE: YARN Capacity Scheduler Resource Management
+
+DESCRIPTION:
+**Components and Interactions:**
+This architectural cluster of the YARN (Yet Another ...
+
+[2/10] Cluster summary: Cluster_1
+  Preview: TITLE: Hadoop YARN Capacity Scheduler Queue Management
+
+DESCRIPTION:
+
+**Components and Interactions:**
+The Hadoop YARN Capacity Scheduler's queue mana...
+
+[3/10] Cluster summary: Cluster_2
+  Preview: TITLE: Hadoop YARN Capacity Scheduler Queue Management
+
+DESCRIPTION:
+**Components and Interactions:**
+This architectural cluster within Hadoop YARN's ...
+
+[4/10] Cluster summary: Cluster_3
+  Preview: TITLE: Hadoop YARN Capacity Scheduler Architecture
+
+DESCRIPTION:
+**Components and Interactions:**
+The Capacity Scheduler in Hadoop YARN consists of in...
+
+[5/10] Cluster summary: Cluster_4
+  Preview: TITLE: YARN Capacity Scheduler Placement Engine
+
+DESCRIPTION:
+**Components and Interactions:** The Placement Engine module generates and manages place...
+
+[6/10] Cluster summary: Cluster_5
+  Preview: TITLE: YARN Capacity Scheduler Priority Management
+
+DESCRIPTION:
+**Components and Interactions:**
+This architectural cluster manages application prior...
+
+[7/10] Cluster summary: Cluster_6
+  Preview: TITLE: Hadoop YARN Capacity Scheduler: Resource Allocation
+
+DESCRIPTION:
+**Components and Interactions:**
+The Capacity Scheduler's resource allocation...
+
+[8/10] Cluster summary: Cluster_7
+  Preview: TITLE: Capacity Scheduler Configuration Management
+
+DESCRIPTION:
+**Components and Interactions:** The Configuration Management Module, within the Capa...
+
+[9/10] Cluster summary: Cluster_8
+  Preview: TITLE: Hadoop YARN Capacity Scheduler Resource Management
+
+DESCRIPTION:
+**Components and Interactions:**
+This architectural cluster within Hadoop YARN...
+
+[10/10] Cluster summary: Cluster_9
+  Preview: TITLE: Hadoop YARN Capacity Scheduler Configuration Management
+
+DESCRIPTION:
+**Components and Interactions:**
+This architectural cluster manages Hadoo...
+Done — 10 clusters.
+Saved: /scratch/hpc-prf-dssecs/group5/pawanw4/week4_outputs_full/results_ARC.csv
+  Format detected: ACDC
+  Clusters: ['Cluster_0', 'Cluster_1', 'Cluster_2', 'Cluster_3', 'Cluster_4', 'Cluster_5', 'Cluster_6']
+  Matched 98/101 files to clusters.
+  [1/98] Cluster_0 -> ConfigurationUpdateAssembler.java
+  [2/98] Cluster_0 -> FSSchedulerConfigurationStore.java
+  [3/98] Cluster_0 -> FileBasedCSConfigurationProvider.java
+  [4/98] Cluster_0 -> InMemoryConfigurationStore.java
+  [5/98] Cluster_0 -> LeveldbConfigurationStore.java
+  [6/98] Cluster_0 -> MutableCSConfigurationProvider.java
+  [7/98] Cluster_0 -> QueueAdminConfigurationMutationACLPolicy.java
+  [8/98] Cluster_0 -> QueueCapacityConfigParser.java
+  [9/98] Cluster_0 -> YarnConfStoreVersionIncompatibleException.java
+  [10/98] Cluster_0 -> YarnConfigurationStore.java
+  [11/98] Cluster_0 -> YarnConfigurationStoreFactory.java
+  [12/98] Cluster_0 -> ZKConfigurationStore.java
+  [13/98] Cluster_1 -> GeneratePojos.java
+  [14/98] Cluster_1 -> MappingRuleCreator.java
+  [15/98] Cluster_1 -> MappingRulesDescription.java
+  [16/98] Cluster_1 -> Rule.java
+  [17/98] Cluster_2 -> PriorityUtilizationQueueOrderingPolicy.java
+  [18/98] Cluster_2 -> QueueOrderingPolicy.java
+  [19/98] Cluster_3 -> AbstractAutoCreatedLeafQueue.java
+  [20/98] Cluster_3 -> AbstractManagedParentQueue.java
+  [21/98] Cluster_3 -> AutoCreatedLeafQueue.java
+  [22/98] Cluster_3 -> AutoCreatedLeafQueueConfig.java
+  [23/98] Cluster_3 -> AutoCreatedQueueManagementPolicy.java
+  [24/98] Cluster_3 -> CSQueueUtils.java
+  [25/98] Cluster_3 -> CapacitySchedulerQueueContext.java
+  [26/98] Cluster_3 -> ConfiguredNodeLabels.java
+  [27/98] Cluster_3 -> ManagedParentQueue.java
+  [28/98] Cluster_3 -> QueueManagementChange.java
+  [29/98] Cluster_3 -> QueuePrefixes.java
+  [30/98] Cluster_3 -> DeactivatedLeafQueuesByLabel.java
+  [31/98] Cluster_3 -> GuaranteedOrZeroCapacityOverTimePolicy.java
+  [32/98] Cluster_3 -> LeafQueueEntitlements.java
+  [33/98] Cluster_4 -> AbsoluteResourceCapacityCalculator.java
+  [34/98] Cluster_4 -> AbstractCSQueue.java
+  [35/98] Cluster_4 -> AbstractLeafQueue.java
+  [36/98] Cluster_4 -> AbstractParentQueue.java
+  [37/98] Cluster_4 -> AbstractQueueCapacityCalculator.java
+  [38/98] Cluster_4 -> AppPriorityACLConfigurationParser.java
+  [39/98] Cluster_4 -> AppPriorityACLGroup.java
+  [40/98] Cluster_4 -> AutoCreatedQueueTemplate.java
+  [41/98] Cluster_4 -> CSMaxRunningAppsEnforcer.java
+  [42/98] Cluster_4 -> CSQueue.java
+  [43/98] Cluster_4 -> CSQueueInfoProvider.java
+  [44/98] Cluster_4 -> CSQueueMetrics.java
+  [45/98] Cluster_4 -> CSQueuePreemptionSettings.java
+  [46/98] Cluster_4 -> CSQueueStore.java
+  [47/98] Cluster_4 -> CSQueueUsageTracker.java
+  [48/98] Cluster_4 -> CalculationContext.java
+  [49/98] Cluster_4 -> CapacityHeadroomProvider.java
+  [50/98] Cluster_4 -> CapacityScheduler.java
+  [51/98] Cluster_4 -> CapacitySchedulerConfigValidator.java
+  [52/98] Cluster_4 -> CapacitySchedulerConfiguration.java
+  [53/98] Cluster_4 -> CapacitySchedulerContext.java
+  [54/98] Cluster_4 -> CapacitySchedulerMetrics.java
+  [55/98] Cluster_4 -> CapacitySchedulerQueueCapacityHandler.java
+  [56/98] Cluster_4 -> CapacitySchedulerQueueManager.java
+  [57/98] Cluster_4 -> ConfigurationProperties.java
+  [58/98] Cluster_4 -> DefaultQueueResourceRoundingStrategy.java
+  [59/98] Cluster_4 -> LeafQueue.java
+  [60/98] Cluster_4 -> ParentQueue.java
+  [61/98] Cluster_4 -> PercentageQueueCapacityCalculator.java
+  [62/98] Cluster_4 -> PlanQueue.java
+  [63/98] Cluster_4 -> QueueAllocationSettings.java
+  [64/98] Cluster_4 -> QueueAppLifetimeAndLimitSettings.java
+  [65/98] Cluster_4 -> QueueCapacities.java
+  [66/98] Cluster_4 -> QueueCapacityUpdateContext.java
+  [67/98] Cluster_4 -> QueueCapacityVector.java
+  [68/98] Cluster_4 -> QueueManagementDynamicEditPolicy.java
+  [69/98] Cluster_4 -> QueueNodeLabelsSettings.java
+  [70/98] Cluster_4 -> QueuePath.java
+  [71/98] Cluster_4 -> QueueResourceRoundingStrategy.java
+  [72/98] Cluster_4 -> QueueStateHelper.java
+  [73/98] Cluster_4 -> QueueUpdateWarning.java
+  [74/98] Cluster_4 -> ReservationQueue.java
+  [75/98] Cluster_4 -> ResourceCalculationDriver.java
+  [76/98] Cluster_4 -> ResourceVector.java
+  [77/98] Cluster_4 -> RootCalculationDriver.java
+  [78/98] Cluster_4 -> RootQueueCapacityCalculator.java
+  [79/98] Cluster_4 -> UserInfo.java
+  [80/98] Cluster_4 -> UserWeights.java
+  [81/98] Cluster_4 -> UsersManager.java
+  [82/98] Cluster_4 -> WeightQueueCapacityCalculator.java
+  [83/98] Cluster_4 -> WorkflowPriorityMappingsManager.java
+  [84/98] Cluster_4 -> AllocationState.java
+  [85/98] Cluster_4 -> CSConfigurationProvider.java
+  [86/98] Cluster_4 -> LegacyMappingRuleToJson.java
+  [87/98] Cluster_4 -> KillableContainer.java
+  [88/98] Cluster_4 -> PreemptableQueue.java
+  [89/98] Cluster_4 -> PreemptionManager.java
+  [90/98] Cluster_5 -> CSAMContainerLaunchDiagnosticsConstants.java
+  [91/98] Cluster_5 -> CSAssignment.java
+  [92/98] Cluster_5 -> SchedulingMode.java
+  [93/98] Cluster_5 -> AbstractContainerAllocator.java
+  [94/98] Cluster_5 -> ContainerAllocation.java
+  [95/98] Cluster_5 -> ContainerAllocator.java
+  [96/98] Cluster_5 -> RegularContainerAllocator.java
+  [97/98] Cluster_6 -> AutoCreatedQueueDeletionPolicy.java
+  [98/98] Cluster_6 -> QueueConfigurationAutoRefreshPolicy.java
+Level 1 complete -> /scratch/hpc-prf-dssecs/group5/pawanw4/week4_outputs_full/file_summaries_ACDC.json
+
+Subdir processing for Cluster_0...
+  Summarising conf/ (12 files)...
+
+Subdir processing for Cluster_1...
+  Summarising placement/ (4 files)...
+
+Subdir processing for Cluster_2...
+  Summarising policy/ (2 files)...
+
+Subdir processing for Cluster_3...
+  Summarising queuemanagement/ (3 files)...
+
+Subdir processing for Cluster_4...
+  Summarising allocator/ (1 files)...
+  Summarising conf/ (1 files)...
+  Summarising placement/ (1 files)...
+  Summarising preemption/ (3 files)...
+
+Subdir processing for Cluster_5...
+  Summarising allocator/ (4 files)...
+
+Subdir processing for Cluster_6...
+
+Level 2 complete -> /scratch/hpc-prf-dssecs/group5/pawanw4/week4_outputs_full/subdir_summaries_ACDC.json
+
+[1/7] Cluster summary: Cluster_0
+  Preview: TITLE: YARN Capacity Scheduler Configuration Management
+
+DESCRIPTION:
+**Components and Interactions:** This architectural module manages Capacity Sche...
+
+[2/7] Cluster summary: Cluster_1
+  Preview: TITLE: YARN Capacity Scheduler Placement Engine
+
+DESCRIPTION:
+**Components and Interactions:** The Placement Engine module generates and configures sc...
+
+[3/7] Cluster summary: Cluster_2
+  Preview: TITLE: YARN Capacity Scheduler Queue Ordering
+
+DESCRIPTION:
+**Components and Interactions:** The Queue Ordering module, within the YARN Capacity Sched...
+
+[4/7] Cluster summary: Cluster_3
+  Preview: TITLE: Hadoop YARN Capacity Scheduler Queue Management
+
+DESCRIPTION:
+**Components and Interactions:**
+This architectural cluster focuses on the queue ...
+
+[5/7] Cluster summary: Cluster_4
+  Preview: TITLE: Hadoop YARN Capacity Scheduler Resource Management
+
+DESCRIPTION:
+**Components and Interactions:**
+The Capacity Scheduler's resource management ...
+
+[6/7] Cluster summary: Cluster_5
+  Preview: TITLE: Hadoop YARN Capacity Scheduler Resource Allocation
+
+DESCRIPTION:
+**Components and Interactions:**
+The Capacity Scheduler's resource allocation ...
+
+[7/7] Cluster summary: Cluster_6
+  Preview: TITLE: YARN Capacity Scheduler Queue Management
+
+DESCRIPTION:
+**Components and Interactions:**
+This architectural cluster manages YARN queues within t...
+Saved: /scratch/hpc-prf-dssecs/group5/pawanw4/week4_outputs_full/results_ACDC.csv
+  Format detected: LIMBO
+  Clusters: ['Cluster_0', 'Cluster_1', 'Cluster_10', 'Cluster_11', 'Cluster_12', 'Cluster_13', 'Cluster_14', 'Cluster_15', 'Cluster_16', 'Cluster_17', 'Cluster_18', 'Cluster_19', 'Cluster_2', 'Cluster_3', 'Cluster_4', 'Cluster_5', 'Cluster_6', 'Cluster_7', 'Cluster_8', 'Cluster_9']
+  Matched 98/101 files to clusters.
+  [1/98] Cluster_0 -> CSAMContainerLaunchDiagnosticsConstants.java
+  [2/98] Cluster_0 -> CapacitySchedulerMetrics.java
+  [3/98] Cluster_0 -> SchedulingMode.java
+  [4/98] Cluster_0 -> AllocationState.java
+  [5/98] Cluster_1 -> AbstractAutoCreatedLeafQueue.java
+  [6/98] Cluster_1 -> AbstractManagedParentQueue.java
+  [7/98] Cluster_1 -> AutoCreatedLeafQueue.java
+  [8/98] Cluster_1 -> AutoCreatedQueueDeletionPolicy.java
+  [9/98] Cluster_1 -> CSAssignment.java
+  [10/98] Cluster_1 -> CSMaxRunningAppsEnforcer.java
+  [11/98] Cluster_1 -> CSQueue.java
+  [12/98] Cluster_1 -> CSQueueInfoProvider.java
+  [13/98] Cluster_1 -> CSQueueMetrics.java
+  [14/98] Cluster_1 -> CSQueuePreemptionSettings.java
+  [15/98] Cluster_1 -> CSQueueStore.java
+  [16/98] Cluster_1 -> CSQueueUsageTracker.java
+  [17/98] Cluster_1 -> CSQueueUtils.java
+  [18/98] Cluster_1 -> CapacityScheduler.java
+  [19/98] Cluster_1 -> CapacitySchedulerConfigValidator.java
+  [20/98] Cluster_1 -> CapacitySchedulerContext.java
+  [21/98] Cluster_1 -> CapacitySchedulerQueueContext.java
+  [22/98] Cluster_1 -> ConfigurationProperties.java
+  [23/98] Cluster_1 -> ConfiguredNodeLabels.java
+  [24/98] Cluster_1 -> ManagedParentQueue.java
+  [25/98] Cluster_1 -> ParentQueue.java
+  [26/98] Cluster_1 -> PlanQueue.java
+  [27/98] Cluster_1 -> QueueAppLifetimeAndLimitSettings.java
+  [28/98] Cluster_1 -> QueueCapacityUpdateContext.java
+  [29/98] Cluster_1 -> QueueConfigurationAutoRefreshPolicy.java
+  [30/98] Cluster_1 -> QueueManagementDynamicEditPolicy.java
+  [31/98] Cluster_1 -> QueueNodeLabelsSettings.java
+  [32/98] Cluster_1 -> QueueStateHelper.java
+  [33/98] Cluster_1 -> QueueUpdateWarning.java
+  [34/98] Cluster_1 -> ReservationQueue.java
+  [35/98] Cluster_1 -> UserInfo.java
+  [36/98] Cluster_1 -> AbstractContainerAllocator.java
+  [37/98] Cluster_1 -> ContainerAllocation.java
+  [38/98] Cluster_1 -> ContainerAllocator.java
+  [39/98] Cluster_1 -> RegularContainerAllocator.java
+  [40/98] Cluster_1 -> QueueAdminConfigurationMutationACLPolicy.java
+  [41/98] Cluster_1 -> YarnConfStoreVersionIncompatibleException.java
+  [42/98] Cluster_1 -> GeneratePojos.java
+  [43/98] Cluster_1 -> KillableContainer.java
+  [44/98] Cluster_1 -> PreemptableQueue.java
+  [45/98] Cluster_1 -> PreemptionManager.java
+  [46/98] Cluster_11 -> AbstractCSQueue.java
+  [47/98] Cluster_12 -> AbstractParentQueue.java
+  [48/98] Cluster_12 -> AutoCreatedQueueManagementPolicy.java
+  [49/98] Cluster_13 -> AppPriorityACLConfigurationParser.java
+  [50/98] Cluster_13 -> AppPriorityACLGroup.java
+  [51/98] Cluster_13 -> WorkflowPriorityMappingsManager.java
+  [52/98] Cluster_14 -> AutoCreatedLeafQueueConfig.java
+  [53/98] Cluster_14 -> QueueCapacities.java
+  [54/98] Cluster_14 -> QueueManagementChange.java
+  [55/98] Cluster_14 -> DeactivatedLeafQueuesByLabel.java
+  [56/98] Cluster_14 -> LeafQueueEntitlements.java
+  [57/98] Cluster_15 -> AutoCreatedQueueTemplate.java
+  [58/98] Cluster_15 -> QueuePrefixes.java
+  [59/98] Cluster_15 -> UserWeights.java
+  [60/98] Cluster_15 -> ConfigurationUpdateAssembler.java
+  [61/98] Cluster_16 -> FSSchedulerConfigurationStore.java
+  [62/98] Cluster_16 -> FileBasedCSConfigurationProvider.java
+  [63/98] Cluster_16 -> InMemoryConfigurationStore.java
+  [64/98] Cluster_16 -> LeveldbConfigurationStore.java
+  [65/98] Cluster_16 -> MutableCSConfigurationProvider.java
+  [66/98] Cluster_16 -> YarnConfigurationStore.java
+  [67/98] Cluster_16 -> YarnConfigurationStoreFactory.java
+  [68/98] Cluster_16 -> ZKConfigurationStore.java
+  [69/98] Cluster_17 -> MappingRuleCreator.java
+  [70/98] Cluster_18 -> MappingRulesDescription.java
+  [71/98] Cluster_18 -> Rule.java
+  [72/98] Cluster_3 -> AbstractLeafQueue.java
+  [73/98] Cluster_3 -> CapacityHeadroomProvider.java
+  [74/98] Cluster_3 -> LeafQueue.java
+  [75/98] Cluster_3 -> QueueAllocationSettings.java
+  [76/98] Cluster_3 -> ResourceVector.java
+  [77/98] Cluster_3 -> UsersManager.java
+  [78/98] Cluster_3 -> PriorityUtilizationQueueOrderingPolicy.java
+  [79/98] Cluster_5 -> GuaranteedOrZeroCapacityOverTimePolicy.java
+  [80/98] Cluster_6 -> CapacitySchedulerConfiguration.java
+  [81/98] Cluster_6 -> CSConfigurationProvider.java
+  [82/98] Cluster_7 -> CapacitySchedulerQueueManager.java
+  [83/98] Cluster_7 -> QueueOrderingPolicy.java
+  [84/98] Cluster_8 -> QueuePath.java
+  [85/98] Cluster_8 -> LegacyMappingRuleToJson.java
+  [86/98] Cluster_9 -> AbsoluteResourceCapacityCalculator.java
+  [87/98] Cluster_9 -> AbstractQueueCapacityCalculator.java
+  [88/98] Cluster_9 -> CalculationContext.java
+  [89/98] Cluster_9 -> CapacitySchedulerQueueCapacityHandler.java
+  [90/98] Cluster_9 -> DefaultQueueResourceRoundingStrategy.java
+  [91/98] Cluster_9 -> PercentageQueueCapacityCalculator.java
+  [92/98] Cluster_9 -> QueueCapacityVector.java
+  [93/98] Cluster_9 -> QueueResourceRoundingStrategy.java
+  [94/98] Cluster_9 -> ResourceCalculationDriver.java
+  [95/98] Cluster_9 -> RootCalculationDriver.java
+  [96/98] Cluster_9 -> RootQueueCapacityCalculator.java
+  [97/98] Cluster_9 -> WeightQueueCapacityCalculator.java
+  [98/98] Cluster_9 -> QueueCapacityConfigParser.java
+Level 1 complete -> /scratch/hpc-prf-dssecs/group5/pawanw4/week4_outputs_full/file_summaries_LIMBO.json
+
+Subdir processing for Cluster_0...
+  Summarising allocator/ (1 files)...
+
+Subdir processing for Cluster_1...
+  Summarising allocator/ (4 files)...
+  Summarising conf/ (2 files)...
+  Summarising placement/ (1 files)...
+  Summarising preemption/ (3 files)...
+
+Subdir processing for Cluster_11...
+
+Subdir processing for Cluster_12...
+
+Subdir processing for Cluster_13...
+
+Subdir processing for Cluster_14...
+  Summarising queuemanagement/ (2 files)...
+
+Subdir processing for Cluster_15...
+  Summarising conf/ (1 files)...
+
+Subdir processing for Cluster_16...
+  Summarising conf/ (8 files)...
+
+Subdir processing for Cluster_17...
+  Summarising placement/ (1 files)...
+
+Subdir processing for Cluster_18...
+  Summarising placement/ (2 files)...
+
+Subdir processing for Cluster_3...
+  Summarising policy/ (1 files)...
+
+Subdir processing for Cluster_5...
+  Summarising queuemanagement/ (1 files)...
+
+Subdir processing for Cluster_6...
+  Summarising conf/ (1 files)...
+
+Subdir processing for Cluster_7...
+  Summarising policy/ (1 files)...
+
+Subdir processing for Cluster_8...
+  Summarising placement/ (1 files)...
+
+Subdir processing for Cluster_9...
+  Summarising conf/ (1 files)...
+
+Level 2 complete -> /scratch/hpc-prf-dssecs/group5/pawanw4/week4_outputs_full/subdir_summaries_LIMBO.json
+
+[1/16] Cluster summary: Cluster_0
+  Preview: TITLE: Hadoop YARN Capacity Scheduler Core
+
+DESCRIPTION:
+**Components and Interactions:**
+The Capacity Scheduler's core components interact to manage ...
+
+[2/16] Cluster summary: Cluster_1
+  Preview: TITLE: Hadoop YARN Capacity Scheduler Core
+
+DESCRIPTION:
+**Components and Interactions:**
+The Hadoop YARN Capacity Scheduler's core architecture consi...
+
+[3/16] Cluster summary: Cluster_11
+  Preview: TITLE: Hadoop YARN Capacity Scheduler Queue Management
+
+DESCRIPTION:
+**Components and Interactions:**
+The AbstractCSQueue class serves as a foundation...
+
+[4/16] Cluster summary: Cluster_12
+  Preview: TITLE: Hadoop YARN Capacity Scheduler Queue Management
+
+DESCRIPTION:
+**Components and Interactions:**
+The Hadoop YARN Capacity Scheduler's queue manag...
+
+[5/16] Cluster summary: Cluster_13
+  Preview: TITLE: YARN Capacity Scheduler Priority Management
+
+DESCRIPTION:
+**Components and Interactions:**
+This architectural cluster manages application prior...
+
+[6/16] Cluster summary: Cluster_14
+  Preview: TITLE: Hadoop YARN Capacity Scheduler Queue Management
+
+DESCRIPTION:
+**Components and Interactions:**
+This architectural cluster manages queue capacit...
+
+[7/16] Cluster summary: Cluster_15
+  Preview: TITLE: Capacity Scheduler Configuration Management
+
+DESCRIPTION:
+**Components and Interactions:**
+This architectural cluster manages configuration upd...
+
+[8/16] Cluster summary: Cluster_16
+  Preview: TITLE: YARN Capacity Scheduler Configuration Management
+
+DESCRIPTION:
+**Components and Interactions:** The configuration management module consists of...
+
+[9/16] Cluster summary: Cluster_17
+  Preview: TITLE: YARN Capacity Scheduler Placement Engine
+
+DESCRIPTION:
+**Components and Interactions:** The Placement Engine module generates and configures pl...
+
+[10/16] Cluster summary: Cluster_18
+  Preview: TITLE: YARN Capacity Scheduler Resource Placement
+
+DESCRIPTION:
+**Components and Interactions:** The Resource Placement module, within the YARN Capaci...
+
+[11/16] Cluster summary: Cluster_3
+  Preview: TITLE: Hadoop YARN Capacity Scheduler Resource Management
+
+DESCRIPTION:
+**Components and Interactions:**
+This architectural cluster within Hadoop YARN...
+
+[12/16] Cluster summary: Cluster_5
+  Preview: TITLE: YARN Capacity Scheduler: Queue Management
+
+DESCRIPTION:
+**Components and Interactions:** The Queue Management module dynamically adjusts capaci...
+
+[13/16] Cluster summary: Cluster_6
+  Preview: TITLE: Hadoop YARN Capacity Scheduler Configuration Management
+
+DESCRIPTION:
+**Components and Interactions:**
+The Capacity Scheduler's configuration m...
+
+[14/16] Cluster summary: Cluster_7
+  Preview: TITLE: Hadoop YARN Capacity Scheduler Queue Management
+
+DESCRIPTION:
+**Components and Interactions:**
+The `policy` module determines child queue alloc...
+
+[15/16] Cluster summary: Cluster_8
+  Preview: TITLE: Hadoop YARN Capacity Scheduler: Resource Allocation Framework
+
+DESCRIPTION:
+**Components and Interactions:**
+The `placement` module converts le...
+
+[16/16] Cluster summary: Cluster_9
+  Preview: TITLE: Hadoop YARN Capacity Scheduler Resource Management
+
+DESCRIPTION:
+**Components and Interactions:**
+The Capacity Scheduler's resource management ...
+Saved: /scratch/hpc-prf-dssecs/group5/pawanw4/week4_outputs_full/results_LIMBO.csv
+=== RSF key sample (first 5) ===
+  org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.AbsoluteResourceCapacityCalculator
+  AbsoluteResourceCapacityCalculator
+  org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.AutoCreatedQueueDeletionPolicy
+  AutoCreatedQueueDeletionPolicy
+  org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CSQueueInfoProvider
+
+=== Reconstructed file key sample (first 5) ===
+  CapacitySchedulerQueueManager
+  QueueAppLifetimeAndLimitSettings
+  AbstractCSQueue
+  ManagedParentQueue
+  QueueUpdateWarning
+
+If formats do not match, adjust SOURCE_ROOT in Cell 2.
+Finished: Fri Jun  5 15:48:23 CEST 2026
