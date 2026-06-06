@@ -1,0 +1,525 @@
+import subprocess
+from pathlib import Path
+import os
+import csv
+
+
+OUTPUT_DIR = Path(
+    "/scratch/hpc-prf-dssecs/group5/pawanw4/week4_outputs_full"
+)
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+print(f'Output dir: {OUTPUT_DIR}')
+
+hf_token = os.environ.get("HF_TOKEN")
+
+if not hf_token:
+    raise Exception("HF_TOKEN not found")
+
+
+# Source root — keep at src/main/java so dotted package names match RSF keys
+SOURCE_ROOT = Path(
+    "/scratch/hpc-prf-dssecs/group5/pawanw4/capacity"
+)
+
+CAPACITY_DIR = SOURCE_ROOT
+
+# RSF files — upload to /content/ with these names
+RSF_FILES = {
+    'ARC':   Path('/scratch/hpc-prf-dssecs/group5/pawanw4/ARC_0.4_10.rsf'),
+    'ACDC':  Path('/scratch/hpc-prf-dssecs/group5/pawanw4/ACDC_output.rsf'),
+    'LIMBO': Path('/scratch/hpc-prf-dssecs/group5/pawanw4/limbo-100_IL_20_clusters.rsf'),
+}
+
+MODEL_NAME = 'nvidia/Llama-3.1-Nemotron-70B-Instruct-HF'
+
+for label, p in [('SOURCE_ROOT', SOURCE_ROOT), ('CAPACITY_DIR', CAPACITY_DIR)]:
+    status = 'OK' if p.exists() else 'NOT FOUND'
+    print(f'  {label}: {status}')
+
+# Cell 3: Load LLM in 4-bit mode
+import torch
+import transformers
+from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
+
+if not hasattr(transformers.utils.generic, 'retry'):
+    transformers.utils.generic.retry = lambda *a, **kw: lambda f: f
+
+print("HF_TOKEN loaded.")
+
+bnb_config = BitsAndBytesConfig(
+    load_in_4bit=True,
+    bnb_4bit_compute_dtype=torch.bfloat16,
+    bnb_4bit_use_double_quant=True,
+    bnb_4bit_quant_type='nf4',
+)
+
+print(f'Loading {MODEL_NAME}...')
+tokenizer = AutoTokenizer.from_pretrained(
+    MODEL_NAME,
+    token=hf_token,
+    cache_dir="/scratch/hpc-prf-dssecs/group5/huggingface_cache",
+    local_files_only=True,
+    trust_remote_code=True
+)
+model = AutoModelForCausalLM.from_pretrained(
+    MODEL_NAME,
+    token=hf_token,
+    cache_dir="/scratch/hpc-prf-dssecs/group5/huggingface_cache",
+    local_files_only=True,
+    trust_remote_code=True,
+    quantization_config=bnb_config,
+    device_map="auto",
+    dtype=torch.bfloat16
+)
+tokenizer.pad_token = tokenizer.eos_token
+tokenizer.padding_side = 'left'
+print('Model loaded!')
+
+
+def query_llm(prompt_text: str, max_tokens: int = 350) -> str:
+    try:
+        messages = [{'role': 'user', 'content': prompt_text}]
+        templated = tokenizer.apply_chat_template(
+            messages, tokenize=False, add_generation_prompt=True
+        )
+        inputs = tokenizer(
+            templated, return_tensors='pt', padding=True,
+            truncation=True, max_length=6000,
+        ).to(model.device)
+        with torch.no_grad():
+            outputs = model.generate(
+                input_ids=inputs['input_ids'],
+                attention_mask=inputs['attention_mask'],
+                max_new_tokens=max_tokens,
+                do_sample=True, temperature=0.2, top_p=0.9,
+                pad_token_id=tokenizer.eos_token_id,
+            )
+        generated = outputs[0][inputs['input_ids'].shape[1]:]
+        return tokenizer.decode(generated, skip_special_tokens=True).strip()
+    except Exception as e:
+        print(f'LLM error: {e}')
+        return ''
+
+# Cell 4: Helper functions — RSF parser + file mapper
+import json
+
+
+def parse_rsf(rsf_path: Path) -> dict:
+    """
+    Parse RSF files — handles all 3 formats automatically:
+      ARC:   contain Cluster_0                         org.apache...ClassName
+      LIMBO: contain 0                                  org.apache...ClassName
+      ACDC:  contain org.apache...capacity.ss           org.apache...ClassName
+
+    Normalises cluster IDs to 'Cluster_0', 'Cluster_1', etc.
+    Strips inner-class suffix ($Inner) for file-level mapping.
+    Returns {class_name: cluster_id}
+    """
+    assignments = {}
+    raw_cluster_ids = set()
+
+    # First pass: collect all raw cluster IDs to detect format
+    with rsf_path.open('r', encoding='utf-8') as f:
+        for raw in f:
+            line = raw.strip()
+            if not line or line.startswith('#'):
+                continue
+            parts = line.split()
+            if len(parts) >= 3 and parts[0] == 'contain':
+                raw_cluster_ids.add(parts[1])
+
+    # Detect format and build normalisation map
+    cluster_id_map = {}
+    if any('.' in cid for cid in raw_cluster_ids):  # ACDC: package-path cluster IDs
+        for i, cid in enumerate(sorted(raw_cluster_ids)):
+            cluster_id_map[cid] = f'Cluster_{i}'
+        fmt = 'ACDC'
+    elif all(cid.isdigit() for cid in raw_cluster_ids):  # LIMBO: numeric cluster IDs
+        for cid in raw_cluster_ids:
+            cluster_id_map[cid] = f'Cluster_{cid}'
+        fmt = 'LIMBO'
+    else:  # ARC: already Cluster_X format
+        for cid in raw_cluster_ids:
+            cluster_id_map[cid] = cid
+        fmt = 'ARC'
+
+    print(f'  Format detected: {fmt}')
+    print(f'  Clusters: {sorted(set(cluster_id_map.values()))}')
+
+    # Second pass: build assignments with normalised cluster IDs
+    with rsf_path.open('r', encoding='utf-8') as f:
+        for raw in f:
+            line = raw.strip()
+            if not line or line.startswith('#'):
+                continue
+            parts = line.split()
+            if len(parts) < 3 or parts[0] != 'contain':
+                continue
+            raw_cid, class_name = parts[1], parts[2]
+            cluster_id = cluster_id_map.get(raw_cid, raw_cid)
+
+# Full qualified name
+            assignments[class_name] = cluster_id
+
+# Remove inner class suffix
+            base_name = class_name.split('$')[0]
+            assignments[base_name] = cluster_id
+
+# Simple class name
+            simple_name = base_name.split('.')[-1] 
+            assignments[simple_name] = cluster_id
+
+    return assignments
+
+
+def build_cluster_to_files(assignments: dict, source_root: Path) -> dict:
+    """
+    Walk all .java files under source_root.
+    Match via dotted package name or bare stem.
+    Returns {cluster_id: [Path, ...]}
+    """
+    cluster_to_files = {}
+    all_java = sorted(source_root.rglob('*.java'))
+    matched = 0
+    for fpath in all_java:
+        rel    = fpath.relative_to(source_root)
+        dotted = str(rel.with_suffix('')).replace('/', '.').replace('\\', '.')
+        cid    = assignments.get(dotted) or assignments.get(fpath.stem)
+        if cid:
+            cluster_to_files.setdefault(cid, []).append(fpath)
+            matched += 1
+    print(f'  Matched {matched}/{len(all_java)} files to clusters.')
+    return cluster_to_files
+
+
+def get_subdir(fpath: Path, capacity_dir: Path) -> str:
+    """
+    Returns immediate subdirectory name under capacity_dir,
+    or 'root' if file is directly in capacity_dir.
+    """
+    try:
+        parts = fpath.relative_to(capacity_dir).parts
+        return parts[0] if len(parts) > 1 else 'root'
+    except ValueError:
+        return 'root'
+
+
+print('Cell 4 complete.')
+
+# Cell 5: LEVEL 1 — Leaf node: summarise each .java file
+# Passes raw source code to LLM
+# Saves checkpoint to Drive after every file
+
+FILE_SUMMARY_PROMPT = FILE_SUMMARY_PROMPT = """
+You are an expert software architect and software maintenance analyst.
+
+Analyze the following Java source file and produce a concise semantic summary.
+
+Return your answer using exactly the following structure:
+
+Purpose:
+A short description of the file's main responsibility.
+
+Key Functionality:
+- Bullet point
+- Bullet point
+- Bullet point
+
+Core Logic:
+- Describe the main algorithms, workflows, or processing logic.
+
+Inputs:
+- Data received by this component.
+- Method parameters, files, messages, APIs, etc.
+
+Outputs:
+- Data produced by this component.
+- Files, return values, messages, API responses, etc.
+
+Dependencies:
+- External classes, libraries, frameworks, services, or modules used.
+
+Source Code:
+
+{source_code}
+"""
+
+MAX_SOURCE_CHARS = 8000
+
+
+def summarise_file(fpath: Path) -> str:
+    try:
+        source = fpath.read_text(encoding='utf-8', errors='replace')[:MAX_SOURCE_CHARS]
+    except Exception as e:
+        return f'[Could not read: {e}]'
+    return query_llm(
+        FILE_SUMMARY_PROMPT.format(filename=fpath.name, source_code=source),
+        max_tokens=250
+    )
+
+
+def run_leaf_summarisation(algo_name: str, cluster_to_files: dict) -> dict:
+    save_path = OUTPUT_DIR / f'file_summaries_{algo_name}.json'
+    all_summaries = json.loads(save_path.read_text()) if save_path.exists() else {}
+    if save_path.exists():
+        print(f'  Resuming from checkpoint: {save_path}')
+
+    total = sum(len(v) for v in cluster_to_files.values())
+    idx   = 0
+    for cid, files in sorted(cluster_to_files.items()):
+        cluster_sums = all_summaries.setdefault(cid, {})
+        for fpath in files:
+            idx += 1
+            if fpath.name in cluster_sums:
+                continue
+            print(f'  [{idx}/{total}] {cid} -> {fpath.name}')
+            cluster_sums[fpath.name] = summarise_file(fpath)
+            # Checkpoint after every file
+            save_path.write_text(json.dumps(all_summaries, indent=2, ensure_ascii=False))
+
+    print(f'Level 1 complete -> {save_path}')
+    return all_summaries
+
+
+# --- RUN FOR ARC ---
+CURRENT_ALGO = 'ARC'
+
+if not RSF_FILES[CURRENT_ALGO].exists():
+    raise FileNotFoundError(
+    f"RSF file not found: {RSF_FILES[CURRENT_ALGO]}"
+)
+
+print(f'Parsing {CURRENT_ALGO} RSF...')
+assignments = parse_rsf(RSF_FILES[CURRENT_ALGO])
+print(f'  {len(assignments)} mappings.')
+
+print('Building cluster->files map...')
+cluster_to_files = build_cluster_to_files(assignments, SOURCE_ROOT)
+for cid, flist in sorted(cluster_to_files.items()):
+    print(f'  {cid}: {len(flist)} files')
+
+#for cid in cluster_to_files:
+#    cluster_to_files[cid] = cluster_to_files[cid][:3]
+
+print('\nLevel 1: Leaf summarisation (longest step)...')
+file_summaries = run_leaf_summarisation(CURRENT_ALGO, cluster_to_files)
+
+# Cell 6: LEVEL 2 — Subdirectory node summarisation
+# Groups files by subdir (allocator, conf, placement, policy, preemption, queuemanagement)
+# Passes file summaries (NOT raw code) to LLM for subdir-level summary
+
+SUBDIR_SUMMARY_PROMPT = """\
+You are a software architecture analyst.
+Below are semantic summaries of all Java files in the subdirectory '{subdir_name}'.
+
+Based ONLY on these summaries (do NOT pass raw code), write a concise technical
+description (4-6 sentences) of what this subdirectory is responsible for as an
+architectural module. Cover:
+- Its overall responsibility within the Capacity Scheduler
+- How the files/components inside it collaborate
+- Any notable design patterns or interfaces used
+
+--- File summaries for '{subdir_name}/' ---
+{summaries_text}
+"""
+
+
+def run_subdir_summarisation(algo_name: str, file_summaries: dict,
+                              cluster_to_files: dict) -> dict:
+    save_path = OUTPUT_DIR / f'subdir_summaries_{algo_name}.json'
+    all_subdir = json.loads(save_path.read_text()) if save_path.exists() else {}
+    if save_path.exists():
+        print(f'  Resuming from checkpoint: {save_path}')
+
+    for cid, files in sorted(cluster_to_files.items()):
+        print(f'\nSubdir processing for {cid}...')
+        cluster_subdir = all_subdir.setdefault(cid, {})
+
+        # Group files by their immediate subdirectory
+        subdir_to_files = {}
+        for fpath in files:
+            sd = get_subdir(fpath, CAPACITY_DIR)
+            if sd != 'root':  # root-level files skip subdir summarisation
+                subdir_to_files.setdefault(sd, []).append(fpath)
+
+        for sd_name, sd_files in sorted(subdir_to_files.items()):
+            if sd_name in cluster_subdir:
+                print(f'  {sd_name}/ already done.')
+                continue
+
+            file_sums = file_summaries.get(cid, {})
+            summaries_text = '\n\n'.join(
+                f'### {f.name}\n{file_sums.get(f.name, "(no summary)")}'
+                for f in sd_files
+            )
+            if len(summaries_text) > 8000:
+                summaries_text = summaries_text[:8000] + '\n[truncated]'
+
+            print(f'  Summarising {sd_name}/ ({len(sd_files)} files)...')
+            cluster_subdir[sd_name] = query_llm(
+                SUBDIR_SUMMARY_PROMPT.format(
+                    subdir_name=sd_name,
+                    summaries_text=summaries_text
+                ),
+                max_tokens=200
+            )
+
+        # Checkpoint after each cluster
+        save_path.write_text(json.dumps(all_subdir, indent=2, ensure_ascii=False))
+
+    print(f'\nLevel 2 complete -> {save_path}')
+    return all_subdir
+
+
+print('Level 2: Subdirectory summarisation...')
+subdir_summaries = run_subdir_summarisation(CURRENT_ALGO, file_summaries, cluster_to_files)
+
+# Cell 7: LEVEL 3 — Cluster branch node: final title + description
+# Combines subdir summaries + root-level file summaries
+# Outputs title + <=150 word description per cluster
+
+CLUSTER_SUMMARY_PROMPT = """\
+You are a software architecture expert performing architectural recovery on
+Hadoop YARN Capacity Scheduler.
+
+Below are summaries of the subdirectories and root-level files belonging to
+one architectural cluster. Based ONLY on these summaries, generate:
+
+1. TITLE: A short precise architectural title (5-10 words).
+2. DESCRIPTION: A concise summary STRICTLY under 150 words that covers:
+   a) Components and Interactions: how the parts work together
+   b) Quality Attributes: non-functional properties (e.g. scalability, fairness,
+      security, maintainability, extensibility)
+   c) Technology Used: Java patterns, frameworks, or tools identified
+
+Format your response EXACTLY like this with no extra text:
+TITLE: <title here>
+DESCRIPTION: <description here>
+
+--- Summaries for Cluster {cluster_id} ---
+{summaries_text}
+"""
+
+
+def parse_cluster_response(response: str):
+    title, desc_parts, in_desc = 'N/A', [], False
+    for line in response.splitlines():
+        if line.startswith('TITLE:'):
+            title = line[6:].strip()
+        elif line.startswith('DESCRIPTION:'):
+            in_desc = True
+            desc_parts.append(line[12:].strip())
+        elif in_desc and line.strip():
+            desc_parts.append(line.strip())
+    return title, ' '.join(desc_parts) if desc_parts else 'N/A'
+
+def save_csv(rows, algo_name):
+    csv_path = OUTPUT_DIR / f"results_{algo_name}.csv"
+
+    with open(csv_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(
+            f,
+            fieldnames=[
+                "cluster_ID",
+                "files",
+                "title",
+                "description"
+            ]
+        )
+        writer.writeheader()
+        writer.writerows(rows)
+
+    print(f"Saved: {csv_path}")
+
+def run_cluster_summarisation(algo_name, file_summaries, subdir_summaries, cluster_to_files):
+    rows = []
+    total = len(cluster_to_files)
+
+    for i, (cid, files) in enumerate(sorted(cluster_to_files.items()), 1):
+        print(f'\n[{i}/{total}] Cluster summary: {cid}')
+        parts = []
+
+        # Add subdir-level summaries (Level 2 output)
+        for sd_name, sd_sum in sorted(subdir_summaries.get(cid, {}).items()):
+            parts.append(f'### Subdirectory: {sd_name}/\n{sd_sum}')
+
+        # Add root-level file summaries (files directly in capacity/, no subdir)
+        file_sums = file_summaries.get(cid, {})
+        for fpath in files:
+            if get_subdir(fpath, CAPACITY_DIR) == 'root':
+                s = file_sums.get(fpath.name, '')
+                if s:
+                    parts.append(f'### Root file: {fpath.name}\n{s}')
+
+        if not parts:
+            print(f'  No summaries for {cid}, skipping.')
+            continue
+
+        summaries_text = '\n\n'.join(parts)
+        if len(summaries_text) > 10000:
+            summaries_text = summaries_text[:10000] + '\n[truncated]'
+
+        response = query_llm(
+            CLUSTER_SUMMARY_PROMPT.format(cluster_id=cid, summaries_text=summaries_text),
+            max_tokens=300
+        )
+        print(f'  Preview: {response[:150]}...')
+
+        title, description = parse_cluster_response(response)
+        rows.append({
+            'cluster_ID':  cid,
+            'files':       '; '.join(sorted(f.name for f in files)),
+            'title':       title,
+            'description': description,
+        })
+
+    return rows
+
+
+print('Level 3: Cluster-level summarisation...')
+cluster_results = run_cluster_summarisation(
+    CURRENT_ALGO, file_summaries, subdir_summaries, cluster_to_files
+)
+print(f'Done — {len(cluster_results)} clusters.')
+save_csv(cluster_results, CURRENT_ALGO)
+
+
+
+# Cell 10: (Optional) Run ACDC — upload acdc_clusters.rsf to /content/ first
+CURRENT_ALGO = 'ACDC'
+
+if not RSF_FILES[CURRENT_ALGO].exists():
+    print('acdc_clusters.rsf not found — skipping.')
+else:
+    a = parse_rsf(RSF_FILES[CURRENT_ALGO])
+    c = build_cluster_to_files(a, SOURCE_ROOT)
+    fs = run_leaf_summarisation(CURRENT_ALGO, c)
+    ss = run_subdir_summarisation(CURRENT_ALGO, fs, c)
+    r  = run_cluster_summarisation(CURRENT_ALGO, fs, ss, c)
+    save_csv(r, CURRENT_ALGO)
+
+# Cell 11: (Optional) Run LIMBO — upload limbo_clusters.rsf to /content/ first
+CURRENT_ALGO = 'LIMBO'
+
+if not RSF_FILES[CURRENT_ALGO].exists():
+    print('limbo_clusters.rsf not found — skipping.')
+else:
+    a = parse_rsf(RSF_FILES[CURRENT_ALGO])
+    c = build_cluster_to_files(a, SOURCE_ROOT)
+    fs = run_leaf_summarisation(CURRENT_ALGO, c)
+    ss = run_subdir_summarisation(CURRENT_ALGO, fs, c)
+    r  = run_cluster_summarisation(CURRENT_ALGO, fs, ss, c)
+    save_csv(r, CURRENT_ALGO)
+
+# Cell 12: Debug — run this if you see 0 files matched in Cell 5
+print('=== RSF key sample (first 5) ===')
+for k in list(assignments.keys())[:5]:
+    print(' ', k)
+
+print('\n=== Reconstructed file key sample (first 5) ===')
+for fpath in list(SOURCE_ROOT.rglob('*.java'))[:5]:
+    rel    = fpath.relative_to(SOURCE_ROOT)
+    dotted = str(rel.with_suffix('')).replace('/', '.').replace('\\', '.')
+    print(f'  {dotted}')
+
+print('\nIf formats do not match, adjust SOURCE_ROOT in Cell 2.')
