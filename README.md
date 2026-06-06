@@ -1,187 +1,209 @@
-# 📊 DSSE Assignment 1 – Group 5  
-## Hadoop YARN ResourceManager – Architectural Analysis
+# DSSE Assignment 1 – Group 5
+
+## Overview
+
+This repository contains the complete implementation and analysis for Assignment 1 of the Data Science for Software Engineering (DSSE) course.
+
+The project investigates software architecture recovery for the Hadoop YARN Capacity Scheduler using a combination of:
+
+- Structural clustering
+- Semantic clustering
+- Large Language Models (LLMs)
+- Hierarchical architectural summarization
+
+The work was completed over four weeks and culminates in an automated architectural recovery pipeline capable of generating high-level architectural descriptions from source code.
 
 ---
 
-## 📌 Project Overview
-This project analyzes the architecture of the Hadoop YARN ResourceManager, focusing on the scheduler and capacity components. The goal is to extract dependencies from the system and apply clustering algorithms to understand architectural structure.
+## Team Members
+
+| Name                        | Contribution                                                    |
+| --------------------------- | --------------------------------------------------------------- |
+| Umang Arvindbhai Raval      | Heavyweight HPC deployment, prompt engineering, model execution |
+| Pawankumar Ravish           | Heavyweight pipeline development and automation                 |
+| Keshav Indrabhushan Purohit | Lightweight model implementation                                |
+| Rahul Vinod Borana          | Lightweight pipeline validation and evaluation                  |
+| Sangsaptak Pal              | Documentation, report preparation and QA                        |
 
 ---
 
-## 🎯 Research Questions
-1. How do different clustering algorithms vary in identifying architectural components?
-2. How effectively can dependency extraction support architectural understanding?
+# Week 1 – Dependency Extraction and Structural Clustering
+
+## Objective
+
+Extract structural dependencies from Hadoop YARN and generate architectural clusters.
+
+## Activities
+
+- Compiled Hadoop project
+- Generated dependency RSF files
+- Filtered Capacity Scheduler components
+- Generated clusters using:
+  - WCA
+  - ACDC
+  - LIMBO
+
+## Deliverables
+
+- Filtered dependency RSF
+- ACDC cluster RSF
+- LIMBO cluster RSF
+- WCA cluster RSF
 
 ---
 
-## 👥 Team Members
-- Keshav Indrabhushan Purohit  
-- Rahul Vinod Borana  
-- Umang Arvindbhai Raval  
-- Pawankumar Ravish  
-- Sangsaptak Pal  
+# Week 2 – Cluster Evaluation and LLM Preparation
+
+## Objective
+
+Evaluate clustering quality and prepare LLM environments.
+
+## Activities
+
+- Calculated architecture similarity metrics
+- Compared clustering outputs
+- Configured lightweight and heavyweight LLM environments
+- Tested prompting strategies
+
+## Models Assigned
+
+### Lightweight
+
+- ByteDance/Seed-Coder-8B-Instruct
+
+### Heavyweight
+
+- NVIDIA/Llama-3.1-Nemotron-70B-Instruct-HF
 
 ---
 
-## ⚖️ Work Distribution (Equal Contribution)
-All team members equally contributed to:
-- Environment setup  
-- Hadoop build  
-- Dependency extraction  
-- Filtering  
-- Clustering (WCA, LIMBO, ACDC)  
-- Result validation  
-- Documentation  
+# Week 3 – Semantic Clustering
+
+## Objective
+
+Generate semantic clusters by combining structural and semantic information.
+
+## Activities
+
+- Generated code embeddings
+- Calculated cosine similarity matrices
+- Combined semantic and structural similarity
+- Applied ARC clustering
+
+## Deliverables
+
+- ARC cluster RSF
+- Evaluation metrics
+- Similarity matrices
 
 ---
 
-# ⚙️ Step-by-Step Execution Guide
+# Week 4 – LLM-Based Architectural Recovery
 
-## 🔹 Step 1: Clone Hadoop Repository
-    git clone https://github.com/apache/hadoop.git
-    cd hadoop
+## Objective
 
----
+Recover architectural descriptions using hierarchical summarization.
 
-## 🔹 Step 2: Build Hadoop (Generate JAR)
-    mvn clean package -DskipTests
+## Three-Level Hierarchical Pipeline
 
-✔ Output:
-    hadoop-yarn-server-resourcemanager-3.6.0-SNAPSHOT.jar
+### Level 1 – File Summarization
 
----
+Each Java file is summarized independently.
 
-## 🔹 Step 3: Extract Full Dependencies (ARCADE JavaParser)
-    java -jar arcade_tools/arcade_core_JavaParser.jar \
-    /home/umang/Desktop/DSSE/hadoop/hadoop/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-server/hadoop-yarn-server-resourcemanager/target/hadoop-yarn-server-resourcemanager-3.6.0-SNAPSHOT.jar \
-    output/YARN_full.rsf \
-    output/YARN_full.fv \
-    "org.apache.hadoop.yarn"
+Outputs:
 
-✔ Output Logs:
-- 1181 classes analysed  
-- 353 strong components  
-- 68 packages  
-- 17 package components  
+- Purpose
+- Key functionality
+- Core logic
+- Inputs/Outputs
+- Dependencies
 
-✔ Count total dependencies:
-    wc -l output/YARN_full.rsf
+### Level 2 – Subdirectory Summarization
 
-✔ Result:
-    10036 output/YARN_full.rsf
+File summaries are aggregated into package-level summaries.
+
+### Level 3 – Cluster Summarization
+
+Subdirectory summaries are combined to generate:
+
+- Architectural title
+- Architectural description
+- Component responsibilities
+- Interactions
 
 ---
 
-## 🔹 Step 4: Filter Relevant Dependencies (Scheduler Capacity)
-    grep "scheduler.capacity" output/YARN_full.rsf > output/yarn_filtered.rsf
+## Lightweight Implementation
 
-✔ Count filtered dependencies:
-    wc -l output/yarn_filtered.rsf
+Environment:
 
-✔ Result:
-    3935 output/yarn_filtered.rsf
+- Google Colab
+- NVIDIA T4 GPU
+- ByteDance Seed-Coder-8B-Instruct
+- 4-bit Quantization
 
----
+Outputs:
 
-## 🔹 Step 5: Run Clustering Algorithms
-
-### ▶️ WCA
-    java -Xmx4g -jar arcade_tools/arcade_core_clusterer.jar \
-    algo=WCA language=java \
-    deps=output/yarn_filtered.rsf measure=UEM \
-    projname=WCA projpath=WCA projversion=1
+- File summaries
+- Subdirectory summaries
+- Cluster summaries
 
 ---
 
-### ▶️ LIMBO
-    java -Xmx4g -jar arcade_tools/arcade_core_clusterer.jar \
-    algo=LIMBO language=java \
-    deps=output/yarn_filtered.rsf measure=IL \
-    projname=LIMBO projpath=LIMBO projversion=1
+## Heavyweight Implementation
+
+Environment:
+
+- University HPC Cluster
+- Dual NVIDIA A100 GPUs
+- NVIDIA Llama-3.1-Nemotron-70B-Instruct-HF
+- SLURM
+
+Outputs:
+
+- File summaries
+- Subdirectory summaries
+- Cluster summaries
+- CSV architectural recovery reports
 
 ---
 
-### ▶️ ACDC
-    java -jar arcade_tools/arcade_core-ACDC.jar \
-    output/yarn_filtered.rsf ACDC/
+# Research Questions
+
+1. How do different clustering algorithms vary in their ability to determine architectural components?
+
+2. How do different prompting techniques impact an LLM's ability to describe architectural components from source code?
+
+3. Can lightweight models achieve architectural recovery quality comparable to heavyweight models?
 
 ---
 
-## 🔹 Step 6: Evaluate Results
+# Key Findings
 
-### ▶️ WCA
-    echo "WCA Results:"
-    wc -l WCA/*.rsf
-    cut -d ' ' -f2 WCA/*.rsf | sort | uniq | wc -l
-
----
-
-### ▶️ LIMBO
-    echo "LIMBO Results:"
-    wc -l LIMBO/*.rsf
-    cut -d ' ' -f2 LIMBO/*.rsf | sort | uniq | wc -l
+- ARC produced the most semantically coherent clusters.
+- Hierarchical summarization reduced context-window limitations.
+- Structured prompts improved architectural descriptions.
+- Lightweight models successfully recovered architecture on commodity hardware.
+- Heavyweight models generated richer and more consistent summaries.
 
 ---
 
-### ▶️ ACDC
-    echo "ACDC Results:"
-    wc -l ACDC/*.rsf
-    cut -d ' ' -f2 ACDC/*.rsf | sort | uniq | wc -l
+# Technologies Used
+
+- Python
+- Hadoop YARN
+- ARCADE
+- Google Colab
+- SLURM
+- PyTorch
+- Hugging Face Transformers
+- BitsAndBytes
 
 ---
 
-## 📈 Results Summary
+# References
 
-| Algorithm | Lines | Clusters |
-|----------|------|----------|
-| WCA      | 744  | 50       |
-| LIMBO    | 744  | 50       |
-| ACDC     | 744  | 23       |
-
----
-
-## 🔍 Observations
-
-- Full system extraction → **10036 dependencies**
-- Filtered (scheduler.capacity) → **3935 dependencies**
-- WCA & LIMBO → **50 clusters** (fixed stopping criterion)
-- ACDC → **23 clusters** (structure-based)
-- All outputs → **744 relations**
-
-✔ Key Insight:
-- WCA/LIMBO → fine-grained clustering  
-- ACDC → high-level architecture  
-
----
-
-## 📚 Key Learnings
-- Hadoop YARN ResourceManager internals  
-- Large-scale dependency extraction  
-- ARCADE tool usage  
-- Clustering-based architecture recovery  
-- Importance of filtering  
-
----
-
-## 📂 Project Structure
-    DSSE_Assignment1/
-    ├── ACDC/
-    ├── LIMBO/
-    ├── WCA/
-    ├── output/
-    │   ├── YARN_full.rsf
-    │   ├── YARN_full.fv
-    │   └── yarn_filtered.rsf
-    ├── hadoop/
-    ├── arcade_tools/
-    ├── filter.py
-
----
-
-## 📌 Conclusion
-WCA and LIMBO generate detailed fine-grained clusters, while ACDC produces meaningful higher-level architectural groupings. Filtering significantly improves analysis quality and relevance.
-
----
-
-## 🔗 Repository
-https://github.com/Umang-Raval/DSSE_Assignment1
+- Hadoop YARN
+- ARCADE Framework
+- ByteDance Seed-Coder-8B-Instruct
+- NVIDIA Llama-3.1-Nemotron-70B-Instruct-HF
