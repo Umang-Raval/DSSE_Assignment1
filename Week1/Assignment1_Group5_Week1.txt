@@ -1,0 +1,342 @@
+﻿================================================================
+STEP 1: COMPILE THE PROJECT
+================================================================
+
+
+ $  sudo git clone https://github.com/apache/hadoop.git
+  cd hadoop
+  sudo mvn clean install \
+    -pl hadoop-yarn-project/hadoop-yarn/hadoop-yarn-server/hadoop-yarn-server-resourcemanager \
+    -am -DskipTests
+
+
+
+
+
+
+
+
+
+
+================================================================
+STEP 2: EXTRACT DEPENDENCIES WITH ARCADE JAVAPARSER
+================================================================
+
+
+$ java -jar arcade_core_JavaParser.jar \
+hadoop-yarn-server-resourcemanager-3.6.0-SNAPSHOT.jar \
+Outputs/JavaParser/output.rsf \
+Outputs/JavaParser/output_fv.fv \
+org.apache.hadoop.yarn
+
+
+
+
+
+
+
+
+
+
+
+
+================================================================
+STEP 3: FILTER DEPENDENCIES FOR THE TARGET COMPONENT
+================================================================
+
+
+$ grep "org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity" Outputs/JavaParser/output.rsf > Outputs/JavaParser/filtered_rsf.rsf
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+================================================================
+STEP 4: CLUSTERING
+================================================================
+
+
+The filtered .rsf file was clustered using three algorithms. Multiple parameter
+configurations were explored for WCA and LIMBO to tune results.
+
+
+----------------------------------------------------------------
+4.1 WCA 
+----------------------------------------------------------------
+
+
+WCA was run with various combinations of stopping criteria (stop) and
+serialization strategies (serial), using the UEM and UEMNM measures.
+
+
+$ java -Xmx4g -jar arcade_core_clusterer.jar \
+algo=WCA \
+language=java \
+deps=Outputs/JavaParser/filtered_rsf.rsf \
+projpath=Outputs/WCA/ \
+projname=WCA \
+projversion=1 \
+measure=UEM \
+stop=PRESELECTED \
+stopthreshold=50.0 \
+serial=ARCHSIZE \
+serialthreshold=50.0 
+
+
+$ java -Xmx4g -jar arcade_core_clusterer.jar \
+algo=WCA \
+language=java \
+deps=Outputs/JavaParser/filtered_rsf.rsf \
+projpath=Outputs/WCA/ \
+projname=WCA \
+projversion=2 \
+measure=UEM \
+stop=ARCHSIZEFRACTION \
+stopthreshold=50.0 \
+serial=ARCHSIZE \
+serialthreshold=50.0 
+
+
+$ java -Xmx4g -jar arcade_core_clusterer.jar \
+algo=WCA \
+language=java \
+deps=Outputs/JavaParser/filtered_rsf.rsf \
+projpath=Outputs/WCA/ \
+projname=WCA \
+projversion=3 \
+measure=UEM \
+stop=ARCHSIZEFRACTION \
+stopthreshold=50.0 \
+serial=ARCHSIZEMOD \
+serialthreshold=50.0 
+
+
+
+
+$ java -Xmx4g -jar arcade_core_clusterer.jar \
+algo=WCA \
+language=java \
+deps=Outputs/JavaParser/filtered_rsf.rsf \
+projpath=Outputs/WCA/ \
+projname=WCA \
+projversion=4 \
+measure=UEM \
+stop=ARCHSIZEFRACTION \
+stopthreshold=50.0 \
+serial=STEPCOUNT \
+serialthreshold=50.0 
+
+
+$ java -Xmx4g -jar arcade_core_clusterer.jar \
+algo=WCA \
+language=java \
+deps=Outputs/JavaParser/filtered_rsf.rsf \
+projpath=Outputs/WCA/ \
+projname=WCA \
+projversion=5 \
+measure=UEM \
+stop=ARCHSIZEFRACTION \
+stopthreshold=50.0 \
+serial=ARCHSIZEFRACTION \
+serialthreshold=50.0 
+
+
+$ java -Xmx4g -jar arcade_core_clusterer.jar \
+algo=WCA \
+language=java \
+deps=Outputs/JavaParser/filtered_rsf.rsf \
+projpath=Outputs/WCA/ \
+projname=WCA \
+projversion=6 \
+measure=UEMNM \
+stop=PRESELECTED \
+stopthreshold=50.0 \
+serial=ARCHSIZE \
+serialthreshold=50.0 
+
+
+$ java -Xmx4g -jar arcade_core_clusterer.jar \
+algo=WCA \
+language=java \
+deps=Outputs/JavaParser/filtered_rsf.rsf \
+projpath=Outputs/WCA/ \
+projname=WCA \
+projversion=7 \
+measure=UEMNM \
+stop=ARCHSIZEFRACTION \
+stopthreshold=50.0 \
+serial=ARCHSIZEMOD \
+serialthreshold=50.0 
+
+
+$ java -Xmx4g -jar arcade_core_clusterer.jar \
+algo=WCA \
+language=java \
+deps=Outputs/JavaParser/filtered_rsf.rsf \
+projpath=Outputs/WCA/ \
+projname=WCA \
+projversion=100 \
+measure=UEMNM \
+stop=PRESELECTED \
+stopthreshold=20.0 \
+serial=ARCHSIZE \
+serialthreshold=20.0 
+
+
+$ java -Xmx4g -jar arcade_core_clusterer.jar \
+algo=WCA \
+language=java \
+deps=Outputs/JavaParser/filtered_rsf.rsf \
+projpath=Outputs/WCA/ \
+projname=WCA \
+projversion=9 \
+measure=UEMNM \
+stop=ARCHSIZEFRACTION \
+stopthreshold=100.0 \
+serial=ARCHSIZEMOD \
+serialthreshold=100.0 
+
+
+
+
+$ java -Xmx4g -jar arcade_core_clusterer.jar \
+algo=WCA \
+language=java \
+deps=Outputs/JavaParser/filtered_rsf.rsf \
+projpath=Outputs/WCA/ \
+projname=WCA \
+projversion=11 \
+measure=UEMNM \
+stop=PRESELECTED \
+stopthreshold=100.0 \
+serial=STEPCOUNT \
+serialthreshold=20.0
+
+
+----------------------------------------------------------------
+4.2 LIMBO
+----------------------------------------------------------------
+
+
+LIMBO was run using the IL (Information Loss) measure with various stopping
+and serialization thresholds.
+
+
+Selected configurations:
+
+
+$ java -Xmx4g -jar arcade_core_clusterer.jar \
+algo=LIMBO \
+language=java \
+deps=Outputs/JavaParser/filtered_rsf.rsf \
+projpath=Outputs/LIMBO/ \
+projname=LIMBO \
+projversion=1 \
+measure=IL \
+
+
+
+
+$ java -Xmx4g -jar arcade_core_clusterer.jar \
+algo=LIMBO \
+language=java \
+deps=Outputs/JavaParser/filtered_rsf.rsf \
+projpath=Outputs/LIMBO/ \
+projname=LIMBO \
+projversion=2 \
+measure=IL \
+stop=PRESELECTED \
+stopthreshold=50.0 \
+serial=ARCHSIZE \
+Serialthreshold=50.0
+
+
+$ java -Xmx4g -jar arcade_core_clusterer.jar \
+algo=LIMBO \
+language=java \
+deps=Outputs/JavaParser/filtered_rsf.rsf \
+projpath=Outputs/LIMBO/ \
+projname=LIMBO \
+projversion=3 \
+measure=IL \
+stop=PRESELECTED \
+stopthreshold=50.0 \
+serial=ARCHSIZE \
+Serialthreshold=100.0
+
+
+$ java -Xmx4g -jar arcade_core_clusterer.jar \
+algo=LIMBO \
+language=java \
+deps=Outputs/JavaParser/filtered_rsf.rsf \
+projpath=Outputs/LIMBO/ \
+projname=LIMBO \
+projversion=4 \
+measure=IL \
+stop=PRESELECTED \
+stopthreshold=20.0 \
+serial=ARCHSIZE \
+Serialthreshold=50.0
+
+
+$ java -Xmx4g -jar arcade_core_clusterer.jar \
+algo=LIMBO \
+language=java \
+deps=Outputs/JavaParser/filtered_rsf.rsf \
+projpath=Outputs/LIMBO/ \
+projname=LIMBO \
+projversion=5 \
+measure=IL \
+stop=PRESELECTED \
+stopthreshold=20.0 \
+serial=ARCHSIZE \
+Serialthreshold=20.0
+
+
+$ java -Xmx4g -jar arcade_core_clusterer.jar \
+algo=LIMBO \
+language=java \
+deps=Outputs/JavaParser/filtered_rsf.rsf \
+projpath=Outputs/LIMBO/ \
+projname=LIMBO \
+projversion=6 \
+measure=IL \
+stop=ARCHSIZEFRACTION \
+stopthreshold=10.0 \
+serial=ARCHSIZEMOD \
+Serialthreshold=50.0
+
+
+----------------------------------------------------------------
+4.3 ACDC (Structural Clustering)
+----------------------------------------------------------------
+
+
+ACDC uses a pattern-based structural approach and does not require measure
+or threshold parameters.
+
+
+ $  java -Xmx4g -jar arcade_core-ACDC.jar \
+    Outputs/JavaParser/filtered_rsf.rsf \
+    Outputs/ACDC/output.rsf
