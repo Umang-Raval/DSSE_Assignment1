@@ -1,7 +1,4 @@
-# ==========================================
 # 0. IMPORT THE REQUIRED DEPENDENCIES
-# ==========================================
-
 import os
 import torch
 
@@ -11,12 +8,8 @@ from transformers import (
     BitsAndBytesConfig
 )
 
-# ==========================================
 # 1. ENVIRONMENT & MODEL SETUP
-# ==========================================
-
 model_name = "nvidia/Llama-3.1-Nemotron-70B-Instruct-HF"
-
 hf_token = os.environ.get('HF_TOKEN')
 
 if not hf_token:
@@ -25,11 +18,9 @@ if not hf_token:
 # Clear GPU cache
 torch.cuda.empty_cache()
 
-# ==========================================
 # Hardware optimization (Quantization)
 # Required because Nemotron 70B is too large
 # for 2x A100 GPUs in full precision
-# ==========================================
 
 print("Configuring 4-bit quantization...")
 
@@ -39,11 +30,7 @@ bnb_config = BitsAndBytesConfig(
     bnb_4bit_compute_dtype=torch.bfloat16,
     bnb_4bit_use_double_quant=True
 )
-
-# ==========================================
 # 2. LOAD THE TOKENIZER
-# ==========================================
-
 print(f"Loading Tokenizer for {model_name}...")
 
 tokenizer = AutoTokenizer.from_pretrained(
@@ -55,7 +42,6 @@ tokenizer = AutoTokenizer.from_pretrained(
 tokenizer.pad_token = tokenizer.eos_token
 tokenizer.padding_side = "left"
 
-# ==========================================
 # 3. LOAD THE MODEL
 # ==========================================
 
